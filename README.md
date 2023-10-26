@@ -1,4 +1,4 @@
-# focbs-rates-cron
+# focbs-rates-api
 Federal Office for Customs and Border Security FOCBS Daily rates (exchange rates) as an API
 
 ## Purpose
