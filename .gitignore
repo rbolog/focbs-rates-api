@@ -1,0 +1,30 @@
+# Various IDEs and Editors
+.vscode/
+.idea/
+**/*~
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
+
+# dfx temporary files
+.dfx/
+canister_ids.json
+src/declarations/
+
+# Rust 
+/target
+Cargo.lock
+
+# frontend code
+node_modules/
+dist/
+.env
+.env.production
+.wrangler
+package-lock.json
+
+# Others
+**/*.original
+**/*.old
+**/*.perso
