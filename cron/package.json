@@ -2,15 +2,16 @@
   "name": "focbs-rates-api",
   "version": "0.0.0",
   "private": true,
-  "description": "Cloudflare worker that allows to browse an R2 bucket using a web browser. Comparable to Apache files and directories browsing feature.",
+  "description": "Federal Office for Customs and Border Security FOCBS Daily rates (exchange rates) as an API",
   "keywords": [
     "cloudflare",
     "worker",
-    "R2"
+    "cron",
+    "API"
   ],
   "author": "https://github.com/rbolog",
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/rbolog/focbs-rates-api.git",
+  "homepage": "https://github.com/rbolog/focbs-rates-api",
   "repository": {
     "type": "git",
     "url": "git@github.com:rbolog/focbs-rates-api.git"

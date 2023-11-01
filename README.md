@@ -11,10 +11,19 @@ This small project was used to demonstrate the use of Cloudflare workers as part
 
 `npm install wrangler@latest`
 
+## run cron
+
+`npm start`
+
+Initiate an event 
+
+`curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"`
+
 
 ### Documentation
 
 * [Cloudflare Workers](https://developers.cloudflare.com/workers/)
+* [Dinero create, calculate, and format money safely in JavaScript and TypeScript](https://github.com/dinerojs/dinero.js)
 
 
 ## Terms and conditions of use of the data

@@ -6,4 +6,10 @@ compatibility_date = "2023-10-23"
 # Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
 # Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
 [triggers]
-crons = ["* * * * *"] # * * * * * = run every minute
+crons = ["0 * * * *"] # * * * * * = run every minute
+
+[env.dev.triggers]
+crons = ["* * * * *"]
+
+[vars]
+RATES_REQUEST_URL = "https://www.backend-rates.bazg.admin.ch/api/xmldaily?locale=en"

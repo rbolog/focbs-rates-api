@@ -1,19 +1,18 @@
 import {XMLParser} from 'fast-xml-parser'
-/**
- * Welcome to Cloudflare Workers!
- *
- * This is a template for a Scheduled Worker: a Worker that can run on a
- * configurable interval:
- * https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+
+export interface CurrencyI18n {
+	lang : string;
+	text : string;
+}
+
+export interface Currency {
+	rate : number;
+	amount : number;
+	id : string;
+}
 
 export interface Env {
+	RATES_REQUEST_URL : string;
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
 	// MY_KV_NAMESPACE: KVNamespace;
 	//
@@ -41,7 +40,7 @@ export default {
 		// https://www.backend-rates.bazg.admin.ch/api/xmldaily?d=20230927&locale=en
 		const now = new Date();
 		const date = `${now.getFullYear()}${(now.getMonth() +1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
-		const response = await fetch(`https://www.backend-rates.bazg.admin.ch/api/xmldaily?d=${date}&locale=en`,);
+		const response = await fetch(`${env.RATES_REQUEST_URL}&d=${date}`);
 		if(response.ok){
 			parseAndStore(await response.text());	
 		} else {
@@ -56,5 +55,6 @@ async function parseAndStore(data:string): Promise<void> {
 
 	const parser = new XMLParser();
 	let jObj = parser.parse(data);
+
 	console.log(JSON.stringify(jObj));
 }
