@@ -11,6 +11,11 @@ This small project was used to demonstrate the use of Cloudflare workers as part
 
 `npm install wrangler@latest`
 
+[DateTime Lib.](https://moment.github.io/luxon/)
+
+`npm install --save luxon`
+`npm install --save-dev @types/luxon`
+
 ## run cron
 
 `npm start`

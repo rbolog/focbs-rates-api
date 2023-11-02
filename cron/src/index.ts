@@ -1,14 +1,19 @@
-import {XMLParser} from 'fast-xml-parser'
+import {XMLParser} from 'fast-xml-parser';
+import { DateTime } from "luxon"; 
+//import type {  } from '@types/luxon';
 
 export interface CurrencyI18n {
-	lang : string;
+	code : string;
 	text : string;
 }
 
-export interface Currency {
+export interface CurrencyRate {
+	i18n : CurrencyI18n[];
 	rate : number;
 	amount : number;
-	id : string;
+	code : string;
+	rate_date: string;
+	validity_date: string; 
 }
 
 export interface Env {
@@ -54,7 +59,64 @@ export default {
 async function parseAndStore(data:string): Promise<void> {
 
 	const parser = new XMLParser();
-	let jObj = parser.parse(data);
+	const jObj = parser.parse(data);
 
-	console.log(JSON.stringify(jObj));
+	if (jObj && jObj.wechselkurse && jObj.wechselkurse.devise) {
+		const rateDateArray : string[]= jObj.wechselkurse.datum.split('.');
+		const rateHourArray : string[]= jObj.wechselkurse.zeit.split(':');
+		const validityArray : string[]= jObj.wechselkurse.gueltigkeit.split('.');
+		const rateDt = DateTime.fromObject({
+			year: Number.parseInt(rateDateArray[2]),
+			month: Number.parseInt(rateDateArray[1]),
+			day: Number.parseInt(rateDateArray[0]),
+			hour: Number.parseInt(rateHourArray[0]),
+			minute: Number.parseInt(rateHourArray[1]),
+			second: Number.parseInt(rateHourArray[0])}, { zone: 'Europe/Zurich' });
+		const validityDt = DateTime.fromObject({
+			year: Number.parseInt(validityArray[2]),
+			month: Number.parseInt(validityArray[1]),
+			day: Number.parseInt(validityArray[0]),
+			hour: 23,
+			minute: 59,
+		  second: 59 }, { zone: 'Europe/Zurich' });
+		jObj.wechselkurse.devise.forEach((object : any) => {
+			const i18nTexts : CurrencyI18n[] = [];
+			i18nTexts.push(
+				{
+					code : 'de',
+					text : object.land_de || 'Unbestimmter Text für diese Währung.',
+				}
+			);
+			i18nTexts.push(
+				{
+					code : 'fr',
+					text : object.land_fr || 'Texte indéfini pour cette devise.',
+				}
+			);
+			i18nTexts.push(
+				{
+					code : 'it',
+					text : object.land_it || 'Testo indefinito per questa valuta.'
+				}
+			);
+			i18nTexts.push(
+				{
+					code : 'en',
+					text : object.land_en || 'Testo indefinito per questa valuta.'
+				}
+			);
+			const item : CurrencyRate = {
+				i18n : i18nTexts,
+				amount : Number.parseInt(object.waehrung.split(' ')[0]) || 1,
+				code : object.waehrung.split(' ')[1] || 'undefined',
+				rate : Number.parseFloat(object.kurs) || 0.0,
+				rate_date: rateDt.toISO() || 'undefined',
+				validity_date: validityDt.toISO() || 'undefined',
+			}
+			console.log(`${JSON.stringify(item)}`);
+		});
+
+	} else {
+		console.error(`Invalid data. ${data}`)
+	}
 }
