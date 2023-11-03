@@ -18,6 +18,7 @@ export interface CurrencyRate {
 
 export interface Env {
 	RATES_REQUEST_URL : string;
+	KV_CURRENCIES_RATES: KVNamespace;
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
 	// MY_KV_NAMESPACE: KVNamespace;
 	//
@@ -47,7 +48,7 @@ export default {
 		const date = `${now.getFullYear()}${(now.getMonth() +1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
 		const response = await fetch(`${env.RATES_REQUEST_URL}&d=${date}`);
 		if(response.ok){
-			parseAndStore(await response.text());	
+			parseAndStore(await response.text(),env);	
 		} else {
 			console.error(`cron fetch error: ${response.statusText})`);
 		}	
@@ -56,7 +57,7 @@ export default {
 
 
 // https://www.npmjs.com/package/fast-xml-parser
-async function parseAndStore(data:string): Promise<void> {
+async function parseAndStore(data:string,env: Env): Promise<void> {
 
 	const parser = new XMLParser();
 	const jObj = parser.parse(data);
@@ -78,8 +79,9 @@ async function parseAndStore(data:string): Promise<void> {
 			day: Number.parseInt(validityArray[0]),
 			hour: 23,
 			minute: 59,
-		  second: 59 }, { zone: 'Europe/Zurich' });
-		jObj.wechselkurse.devise.forEach((object : any) => {
+		  	second: 59 }, { zone: 'Europe/Zurich' });
+		// jObj.wechselkurse.devise.forEach((object : any) => {
+		for (const object of jObj.wechselkurse.devise) {
 			const i18nTexts : CurrencyI18n[] = [];
 			i18nTexts.push(
 				{
@@ -112,9 +114,15 @@ async function parseAndStore(data:string): Promise<void> {
 				rate : Number.parseFloat(object.kurs) || 0.0,
 				rate_date: rateDt.toISO() || 'undefined',
 				validity_date: validityDt.toISO() || 'undefined',
-			}
-			console.log(`${JSON.stringify(item)}`);
-		});
+			};
+			
+			await env.KV_CURRENCIES_RATES.put(`key_${item.code}`, `${JSON.stringify(item)}`, {
+				expiration: validityDt.plus({ days: 1 }).toJSDate().getMilliseconds()
+			});
+
+			//console.log(`---> put key_${item.code}`);
+			
+		};
 
 	} else {
 		console.error(`Invalid data. ${data}`)
