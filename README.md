@@ -11,9 +11,15 @@ This small project was used to demonstrate the use of Cloudflare workers as part
 
 `npm install wrangler@latest`
 
-[DateTime Lib.](https://moment.github.io/luxon/)
 
-`npm install --save luxon`
+#### cron
+
+`npm install xxhashjs``
+
+`npm install --save-dev @types/xxhashjs`
+
+`npm install luxon`
+
 `npm install --save-dev @types/luxon`
 
 ## run cron
@@ -22,11 +28,12 @@ This small project was used to demonstrate the use of Cloudflare workers as part
 
 Initiate an event 
 
-`curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"`
+`curl "http://localhost:{port}/__scheduled?cron=*+*+*+*+*"`
 
 
 ### Documentation
 
+* [DateTime Lib. Luxon](https://moment.github.io/luxon/)
 * [Cloudflare Workers](https://developers.cloudflare.com/workers/)
 * [Dinero create, calculate, and format money safely in JavaScript and TypeScript](https://github.com/dinerojs/dinero.js)
 

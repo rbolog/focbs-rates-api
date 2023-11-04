@@ -1,6 +1,6 @@
 import {XMLParser} from 'fast-xml-parser';
+import {h32} from 'xxhashjs';
 import { DateTime } from "luxon"; 
-//import type {  } from '@types/luxon';
 
 export interface CurrencyI18n {
 	code : string;
@@ -17,25 +17,9 @@ export interface CurrencyRate {
 }
 
 export interface Env {
+	DISABLE_HASH : boolean;
 	RATES_REQUEST_URL : string;
 	KV_CURRENCIES_RATES: KVNamespace;
-	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-	// MY_KV_NAMESPACE: KVNamespace;
-	//
-	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-	// MY_DURABLE_OBJECT: DurableObjectNamespace;
-	//
-	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-	// MY_BUCKET: R2Bucket;
-	//
-	// Example binding to a Service. Learn more at https://developers.cloudflare.com/workers/runtime-apis/service-bindings/
-	// MY_SERVICE: Fetcher;
-	//
-	// Example binding to a Queue. Learn more at https://developers.cloudflare.com/queues/javascript-apis/
-	// MY_QUEUE: Queue;
-	//
-	// Example binding to a D1 Database. Learn more at https://developers.cloudflare.com/workers/platform/bindings/#d1-database-bindings
-	// DB: D1Database
 }
 
 export default {
@@ -45,10 +29,28 @@ export default {
 		// Source and informations https://www.rates.bazg.admin.ch/home
 		// https://www.backend-rates.bazg.admin.ch/api/xmldaily?d=20230927&locale=en
 		const now = new Date();
+		//const keys = [...(await env.KV_CURRENCIES_RATES.list()).keys];
+		//console.log(`List (${keys.length}): ${JSON.stringify(keys)}`);
+		//await env.KV_CURRENCIES_RATES.delete('key_last_request');
 		const date = `${now.getFullYear()}${(now.getMonth() +1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
 		const response = await fetch(`${env.RATES_REQUEST_URL}&d=${date}`);
 		if(response.ok){
-			parseAndStore(await response.text(),env);	
+			const content = await response.text();
+			if (!env.DISABLE_HASH) {
+				const hash = h32( content, 0 ).toString();
+				const previousHash = await env.KV_CURRENCIES_RATES.get('key_hash');
+				if (hash !== previousHash) {
+					console.log('Update KV store');
+					await parseAndStore(content,env);	
+					await env.KV_CURRENCIES_RATES.put('k',hash,{
+						metadata: { updated: now.toUTCString() },
+					});
+				} else {
+					console.log(`KV store is up-to-date. Hash: ${previousHash}`);
+				}
+			} else {
+				await parseAndStore(content,env);
+			}
 		} else {
 			console.error(`cron fetch error: ${response.statusText})`);
 		}	
@@ -80,51 +82,52 @@ async function parseAndStore(data:string,env: Env): Promise<void> {
 			hour: 23,
 			minute: 59,
 		  	second: 59 }, { zone: 'Europe/Zurich' });
-		// jObj.wechselkurse.devise.forEach((object : any) => {
-		for (const object of jObj.wechselkurse.devise) {
-			const i18nTexts : CurrencyI18n[] = [];
+		const currenciesRates : CurrencyRate[] = [...jObj.wechselkurse.devise.map((currency:any)=>toCurrencyRate(currency,rateDt,validityDt))]; 
+		console.log(`${currenciesRates.length} currencies converted.`);
+		for (const c of currenciesRates) {
+			await env.KV_CURRENCIES_RATES.put(`key_${c.code}`, `${JSON.stringify(c)}`,{
+				expiration: validityDt.plus({hours:12}).valueOf() / 1000
+			});
+		}
+		//console.log(`${JSON.stringify((await env.KV_CURRENCIES_RATES.list()).keys)}`);
+		console.log(await env.KV_CURRENCIES_RATES.get('key_EUR'));
+	} else {
+		console.error(`Invalid data. ${data}`)
+	}
+}
+
+function toCurrencyRate (currency : any,rateDt:DateTime,validityDt:DateTime) : CurrencyRate {
+	const i18nTexts : CurrencyI18n[] = [];
 			i18nTexts.push(
 				{
 					code : 'de',
-					text : object.land_de || 'Unbestimmter Text für diese Währung.',
+					text : currency.land_de || 'Unbestimmter Text für diese Währung.',
 				}
 			);
 			i18nTexts.push(
 				{
 					code : 'fr',
-					text : object.land_fr || 'Texte indéfini pour cette devise.',
+					text : currency.land_fr || 'Texte indéfini pour cette devise.',
 				}
 			);
 			i18nTexts.push(
 				{
 					code : 'it',
-					text : object.land_it || 'Testo indefinito per questa valuta.'
+					text : currency.land_it || 'Testo indefinito per questa valuta.'
 				}
 			);
 			i18nTexts.push(
 				{
 					code : 'en',
-					text : object.land_en || 'Testo indefinito per questa valuta.'
+					text : currency.land_en || 'Testo indefinito per questa valuta.'
 				}
 			);
-			const item : CurrencyRate = {
+			return {
 				i18n : i18nTexts,
-				amount : Number.parseInt(object.waehrung.split(' ')[0]) || 1,
-				code : object.waehrung.split(' ')[1] || 'undefined',
-				rate : Number.parseFloat(object.kurs) || 0.0,
+				amount : Number.parseInt(currency.waehrung.split(' ')[0]) || 1,
+				code : currency.waehrung.split(' ')[1] || 'undefined',
+				rate : Number.parseFloat(currency.kurs) || 0.0,
 				rate_date: rateDt.toISO() || 'undefined',
 				validity_date: validityDt.toISO() || 'undefined',
-			};
-			
-			await env.KV_CURRENCIES_RATES.put(`key_${item.code}`, `${JSON.stringify(item)}`, {
-				expiration: validityDt.plus({ days: 1 }).toJSDate().getMilliseconds()
-			});
-
-			//console.log(`---> put key_${item.code}`);
-			
-		};
-
-	} else {
-		console.error(`Invalid data. ${data}`)
-	}
+			}
 }

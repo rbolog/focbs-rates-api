@@ -1,4 +1,4 @@
-name = "focbs-rates-api"
+name = "focbs-rates-cron"
 main = "src/index.ts"
 compatibility_date = "2023-10-23"
 
@@ -6,15 +6,16 @@ compatibility_date = "2023-10-23"
 # Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
 # Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
 [triggers]
-crons = ["0 * * * *"] # * * * * * = run every minute
+crons = ["10 0-6 * * *"] # At minute 10 past every hour from 0 through 12
 
 [env.dev.triggers]
 crons = ["* * * * *"]
 
 [vars]
 RATES_REQUEST_URL = "https://www.backend-rates.bazg.admin.ch/api/xmldaily?locale=en"
+DISABLE_HASH = false
 
-kv_namespaces = [
-    { binding = "KV_CURRENCIES_RATES", id = "56f4ecf504144b9f8cb503e8e225e1e5" },
-    { binding = "KV_CURRENCIES_RATES", preview_id = "5da5b277ee8841ecbc2ec0388ae05ee6" }
-]
+[[kv_namespaces]]
+binding = "KV_CURRENCIES_RATES"
+id = "56f4ecf504144b9f8cb503e8e225e1e5"
+preview_id = "5da5b277ee8841ecbc2ec0388ae05ee6"
