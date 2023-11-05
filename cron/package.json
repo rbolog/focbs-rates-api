@@ -1,6 +1,6 @@
 {
   "name": "focbs-rates-cron",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Federal Office for Customs and Border Security FOCBS Daily rates (exchange rates) as an API",
   "keywords": [
