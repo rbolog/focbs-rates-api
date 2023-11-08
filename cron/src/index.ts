@@ -1,25 +1,13 @@
 import {XMLParser} from 'fast-xml-parser';
 import {h32} from 'xxhashjs';
 import { DateTime } from "luxon"; 
-
-export interface CurrencyI18n {
-	code : string;
-	text : string;
-}
-
-export interface CurrencyRate {
-	i18n : CurrencyI18n[];
-	rate : number;
-	amount : number;
-	code : string;
-	rate_date: string;
-	validity_date: string; 
-}
+import {CurrencyI18n,CurrencyRate} from "../../commons/types" 
 
 export interface Env {
 	DISABLE_HASH : boolean;
 	RATES_REQUEST_URL : string;
 	KV_CURRENCIES_RATES: KVNamespace;
+	KEY_PREFIX : string;
 }
 
 export default {

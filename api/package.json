@@ -9,7 +9,12 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230419.0",
+    "@types/luxon": "^3.3.4",
     "typescript": "^5.0.4",
     "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "currency.js": "^2.0.4",
+    "luxon": "^3.4.3"
   }
 }

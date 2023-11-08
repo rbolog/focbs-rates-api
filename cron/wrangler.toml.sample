@@ -14,6 +14,7 @@ crons = ["* * * * *"]
 [vars]
 RATES_REQUEST_URL = "https://www.backend-rates.bazg.admin.ch/api/xmldaily?locale=en"
 DISABLE_HASH = false
+KEY_PREFIX = "KEY_C_"
 
 [[kv_namespaces]]
 binding = "KV_CURRENCIES_RATES"

@@ -1,0 +1,1852 @@
+[
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Vereinigte Arabische Emirate"
+            },
+            {
+                "code": "fr",
+                "text": "Emirats Arabes Unis"
+            },
+            {
+                "code": "it",
+                "text": "Emirati Arabi Uniti"
+            },
+            {
+                "code": "en",
+                "text": "United Arab Emirates"
+            }
+        ],
+        "amount": 100,
+        "code": "AED",
+        "rate": 24.76253,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Albanien"
+            },
+            {
+                "code": "fr",
+                "text": "Albanie"
+            },
+            {
+                "code": "it",
+                "text": "Albania"
+            },
+            {
+                "code": "en",
+                "text": "Albania"
+            }
+        ],
+        "amount": 100,
+        "code": "ALL",
+        "rate": 0.93132,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Argentinien"
+            },
+            {
+                "code": "fr",
+                "text": "Argentine"
+            },
+            {
+                "code": "it",
+                "text": "Argentina"
+            },
+            {
+                "code": "en",
+                "text": "Argentina"
+            }
+        ],
+        "amount": 1,
+        "code": "ARS",
+        "rate": 0.0026,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Australien"
+            },
+            {
+                "code": "fr",
+                "text": "Australie"
+            },
+            {
+                "code": "it",
+                "text": "Australia"
+            },
+            {
+                "code": "en",
+                "text": "Australia"
+            }
+        ],
+        "amount": 1,
+        "code": "AUD",
+        "rate": 0.58602,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Aserbaidschan"
+            },
+            {
+                "code": "fr",
+                "text": "Azerbaïdjan"
+            },
+            {
+                "code": "it",
+                "text": "Azerbaigian"
+            },
+            {
+                "code": "en",
+                "text": "Azerbaijan New"
+            }
+        ],
+        "amount": 1,
+        "code": "AZN",
+        "rate": 0.53811,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Bosnien-Herzegowina"
+            },
+            {
+                "code": "fr",
+                "text": "Bosnie-Herzégovine"
+            },
+            {
+                "code": "it",
+                "text": "Bosnia-Erzegovina"
+            },
+            {
+                "code": "en",
+                "text": "Bosnia and Herzegovina"
+            }
+        ],
+        "amount": 100,
+        "code": "BAM",
+        "rate": 49.71866,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Bangladesch"
+            },
+            {
+                "code": "fr",
+                "text": "Bangladesh"
+            },
+            {
+                "code": "it",
+                "text": "Bangladesh"
+            },
+            {
+                "code": "en",
+                "text": "Bangladesh"
+            }
+        ],
+        "amount": 100,
+        "code": "BDT",
+        "rate": 0.83123,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Bulgarien"
+            },
+            {
+                "code": "fr",
+                "text": "Bulgarie"
+            },
+            {
+                "code": "it",
+                "text": "Bulgaria"
+            },
+            {
+                "code": "en",
+                "text": "Bulgaria"
+            }
+        ],
+        "amount": 100,
+        "code": "BGN",
+        "rate": 49.7323,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Bahrain"
+            },
+            {
+                "code": "fr",
+                "text": "Bahreïn"
+            },
+            {
+                "code": "it",
+                "text": "Bahrein"
+            },
+            {
+                "code": "en",
+                "text": "Bahrain"
+            }
+        ],
+        "amount": 1,
+        "code": "BHD",
+        "rate": 2.42443,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Brasilien"
+            },
+            {
+                "code": "fr",
+                "text": "Brésil"
+            },
+            {
+                "code": "it",
+                "text": "Brasile"
+            },
+            {
+                "code": "en",
+                "text": "Brazil"
+            }
+        ],
+        "amount": 100,
+        "code": "BRL",
+        "rate": 18.66743,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kanada"
+            },
+            {
+                "code": "fr",
+                "text": "Canada"
+            },
+            {
+                "code": "it",
+                "text": "Canada"
+            },
+            {
+                "code": "en",
+                "text": "Canada"
+            }
+        ],
+        "amount": 1,
+        "code": "CAD",
+        "rate": 0.6609,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Chile"
+            },
+            {
+                "code": "fr",
+                "text": "Chili"
+            },
+            {
+                "code": "it",
+                "text": "Cile"
+            },
+            {
+                "code": "en",
+                "text": "Chile"
+            }
+        ],
+        "amount": 1000,
+        "code": "CLP",
+        "rate": 1.02616,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "China"
+            },
+            {
+                "code": "fr",
+                "text": "Chine"
+            },
+            {
+                "code": "it",
+                "text": "Cina"
+            },
+            {
+                "code": "en",
+                "text": "China Yuan"
+            }
+        ],
+        "amount": 100,
+        "code": "CNY",
+        "rate": 12.49633,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kolumbien"
+            },
+            {
+                "code": "fr",
+                "text": "Colombie"
+            },
+            {
+                "code": "it",
+                "text": "Colombia"
+            },
+            {
+                "code": "en",
+                "text": "Colombia"
+            }
+        ],
+        "amount": 10000,
+        "code": "COP",
+        "rate": 2.2725,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Costa Rica"
+            },
+            {
+                "code": "fr",
+                "text": "Costa Rica"
+            },
+            {
+                "code": "it",
+                "text": "Costa Rica"
+            },
+            {
+                "code": "en",
+                "text": "Costa Rica"
+            }
+        ],
+        "amount": 1000,
+        "code": "CRC",
+        "rate": 1.71296,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Tschechien"
+            },
+            {
+                "code": "fr",
+                "text": "Tchèque, Rép."
+            },
+            {
+                "code": "it",
+                "text": "Ceca, Rep."
+            },
+            {
+                "code": "en",
+                "text": "Czech Republic"
+            }
+        ],
+        "amount": 100,
+        "code": "CZK",
+        "rate": 3.95238,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Dänemark"
+            },
+            {
+                "code": "fr",
+                "text": "Danemark"
+            },
+            {
+                "code": "it",
+                "text": "Danimarca"
+            },
+            {
+                "code": "en",
+                "text": "Denmark"
+            }
+        ],
+        "amount": 100,
+        "code": "DKK",
+        "rate": 13.03708,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Dominikanische Rep."
+            },
+            {
+                "code": "fr",
+                "text": "Dominicaine, Rép."
+            },
+            {
+                "code": "it",
+                "text": "Dominicana, Rep."
+            },
+            {
+                "code": "en",
+                "text": "Dominican Republic"
+            }
+        ],
+        "amount": 100,
+        "code": "DOP",
+        "rate": 1.61671,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Algerien"
+            },
+            {
+                "code": "fr",
+                "text": "Algérie"
+            },
+            {
+                "code": "it",
+                "text": "Algeria"
+            },
+            {
+                "code": "en",
+                "text": "Algeria"
+            }
+        ],
+        "amount": 100,
+        "code": "DZD",
+        "rate": 0.67838,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Ägypten"
+            },
+            {
+                "code": "fr",
+                "text": "Egypte"
+            },
+            {
+                "code": "it",
+                "text": "Egitto"
+            },
+            {
+                "code": "en",
+                "text": "Egypt"
+            }
+        ],
+        "amount": 100,
+        "code": "EGP",
+        "rate": 2.95552,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Äthiopien"
+            },
+            {
+                "code": "fr",
+                "text": "Ethiopie"
+            },
+            {
+                "code": "it",
+                "text": "Etiopia"
+            },
+            {
+                "code": "en",
+                "text": "Ethiopia"
+            }
+        ],
+        "amount": 100,
+        "code": "ETB",
+        "rate": 1.63469,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Europäische Währungsunion"
+            },
+            {
+                "code": "fr",
+                "text": "Union monétaire européenne"
+            },
+            {
+                "code": "it",
+                "text": "Unione Monetaria Europea"
+            },
+            {
+                "code": "en",
+                "text": "Euro Member"
+            }
+        ],
+        "amount": 1,
+        "code": "EUR",
+        "rate": 0.97273,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Grossbritannien"
+            },
+            {
+                "code": "fr",
+                "text": "Grande-Bretagne"
+            },
+            {
+                "code": "it",
+                "text": "Gran Bretagna"
+            },
+            {
+                "code": "en",
+                "text": "United Kingdom"
+            }
+        ],
+        "amount": 1,
+        "code": "GBP",
+        "rate": 1.11755,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Georgien"
+            },
+            {
+                "code": "fr",
+                "text": "Géorgie"
+            },
+            {
+                "code": "it",
+                "text": "Georgia"
+            },
+            {
+                "code": "en",
+                "text": "Georgia"
+            }
+        ],
+        "amount": 100,
+        "code": "GEL",
+        "rate": 33.9457,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Guatemala"
+            },
+            {
+                "code": "fr",
+                "text": "Guatemala"
+            },
+            {
+                "code": "it",
+                "text": "Guatemala"
+            },
+            {
+                "code": "en",
+                "text": "Guatemala"
+            }
+        ],
+        "amount": 100,
+        "code": "GTQ",
+        "rate": 11.90497,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Hong Kong"
+            },
+            {
+                "code": "fr",
+                "text": "Hong Kong"
+            },
+            {
+                "code": "it",
+                "text": "Hong Kong"
+            },
+            {
+                "code": "en",
+                "text": "Hong Kong"
+            }
+        ],
+        "amount": 100,
+        "code": "HKD",
+        "rate": 11.63318,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Honduras"
+            },
+            {
+                "code": "fr",
+                "text": "Honduras"
+            },
+            {
+                "code": "it",
+                "text": "Honduras"
+            },
+            {
+                "code": "en",
+                "text": "Honduras"
+            }
+        ],
+        "amount": 100,
+        "code": "HNL",
+        "rate": 3.73841,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kroatien"
+            },
+            {
+                "code": "fr",
+                "text": "Croatie"
+            },
+            {
+                "code": "it",
+                "text": "Croazia"
+            },
+            {
+                "code": "en",
+                "text": "Croatia"
+            }
+        ],
+        "amount": 100,
+        "code": "HRK",
+        "rate": 12.90631,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Ungarn"
+            },
+            {
+                "code": "fr",
+                "text": "Hongrie"
+            },
+            {
+                "code": "it",
+                "text": "Ungheria"
+            },
+            {
+                "code": "en",
+                "text": "Hungary"
+            }
+        ],
+        "amount": 1000,
+        "code": "HUF",
+        "rate": 2.57214,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Indonesien"
+            },
+            {
+                "code": "fr",
+                "text": "Indonésie"
+            },
+            {
+                "code": "it",
+                "text": "Indonesia"
+            },
+            {
+                "code": "en",
+                "text": "Indonesia"
+            }
+        ],
+        "amount": 10000,
+        "code": "IDR",
+        "rate": 0.58287,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Israel"
+            },
+            {
+                "code": "fr",
+                "text": "Israël"
+            },
+            {
+                "code": "it",
+                "text": "Israele"
+            },
+            {
+                "code": "en",
+                "text": "Israel"
+            }
+        ],
+        "amount": 1,
+        "code": "ILS",
+        "rate": 0.23524,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Indien"
+            },
+            {
+                "code": "fr",
+                "text": "Inde"
+            },
+            {
+                "code": "it",
+                "text": "India"
+            },
+            {
+                "code": "en",
+                "text": "India"
+            }
+        ],
+        "amount": 100,
+        "code": "INR",
+        "rate": 1.09262,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Island"
+            },
+            {
+                "code": "fr",
+                "text": "Islande"
+            },
+            {
+                "code": "it",
+                "text": "Islanda"
+            },
+            {
+                "code": "en",
+                "text": "Iceland"
+            }
+        ],
+        "amount": 100,
+        "code": "ISK",
+        "rate": 0.64754,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Japan"
+            },
+            {
+                "code": "fr",
+                "text": "Japon"
+            },
+            {
+                "code": "it",
+                "text": "Giappone"
+            },
+            {
+                "code": "en",
+                "text": "Japan"
+            }
+        ],
+        "amount": 100,
+        "code": "JPY",
+        "rate": 0.60428,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kenia"
+            },
+            {
+                "code": "fr",
+                "text": "Kenya"
+            },
+            {
+                "code": "it",
+                "text": "Kenia"
+            },
+            {
+                "code": "en",
+                "text": "Kenya"
+            }
+        ],
+        "amount": 100,
+        "code": "KES",
+        "rate": 0.60258,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kambodscha"
+            },
+            {
+                "code": "fr",
+                "text": "Cambodge"
+            },
+            {
+                "code": "it",
+                "text": "Cambogia"
+            },
+            {
+                "code": "en",
+                "text": "Cambodia"
+            }
+        ],
+        "amount": 10000,
+        "code": "KHR",
+        "rate": 2.23483,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Süd-Korea"
+            },
+            {
+                "code": "fr",
+                "text": "Corée du Sud"
+            },
+            {
+                "code": "it",
+                "text": "Corea del Sud"
+            },
+            {
+                "code": "en",
+                "text": "Korea (South)"
+            }
+        ],
+        "amount": 100,
+        "code": "KRW",
+        "rate": 0.06989,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kuwait"
+            },
+            {
+                "code": "fr",
+                "text": "Koweït"
+            },
+            {
+                "code": "it",
+                "text": "Kuwait"
+            },
+            {
+                "code": "en",
+                "text": "Kuwait"
+            }
+        ],
+        "amount": 1,
+        "code": "KWD",
+        "rate": 2.95472,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kaiman-Inseln"
+            },
+            {
+                "code": "fr",
+                "text": "Caïmanes, Iles"
+            },
+            {
+                "code": "it",
+                "text": "Cayman, Isole"
+            },
+            {
+                "code": "en",
+                "text": "Cayman Islands"
+            }
+        ],
+        "amount": 1,
+        "code": "KYD",
+        "rate": 1.10903,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Kasachstan"
+            },
+            {
+                "code": "fr",
+                "text": "Kazakhstan"
+            },
+            {
+                "code": "it",
+                "text": "Kazakstan"
+            },
+            {
+                "code": "en",
+                "text": "Kazakhstan"
+            }
+        ],
+        "amount": 1000,
+        "code": "KZT",
+        "rate": 1.95857,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Libanon"
+            },
+            {
+                "code": "fr",
+                "text": "Liban"
+            },
+            {
+                "code": "it",
+                "text": "Libano"
+            },
+            {
+                "code": "en",
+                "text": "Lebanon"
+            }
+        ],
+        "amount": 10000,
+        "code": "LBP",
+        "rate": 0.6063,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Sri Lanka"
+            },
+            {
+                "code": "fr",
+                "text": "Sri Lanka"
+            },
+            {
+                "code": "it",
+                "text": "Sri Lanka"
+            },
+            {
+                "code": "en",
+                "text": "Sri Lanka"
+            }
+        ],
+        "amount": 1000,
+        "code": "LKR",
+        "rate": 2.78267,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Libyen"
+            },
+            {
+                "code": "fr",
+                "text": "Libye"
+            },
+            {
+                "code": "it",
+                "text": "Libia"
+            },
+            {
+                "code": "en",
+                "text": "Libya"
+            }
+        ],
+        "amount": 1,
+        "code": "LYD",
+        "rate": 0.18858,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Marokko"
+            },
+            {
+                "code": "fr",
+                "text": "Maroc"
+            },
+            {
+                "code": "it",
+                "text": "Marocco"
+            },
+            {
+                "code": "en",
+                "text": "Morocco"
+            }
+        ],
+        "amount": 1,
+        "code": "MAD",
+        "rate": 0.08942,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Mauritius"
+            },
+            {
+                "code": "fr",
+                "text": "Maurice"
+            },
+            {
+                "code": "it",
+                "text": "Maurizio"
+            },
+            {
+                "code": "en",
+                "text": "Mauritius"
+            }
+        ],
+        "amount": 100,
+        "code": "MUR",
+        "rate": 2.12036,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Mexiko"
+            },
+            {
+                "code": "fr",
+                "text": "Mexique"
+            },
+            {
+                "code": "it",
+                "text": "Messico"
+            },
+            {
+                "code": "en",
+                "text": "Mexico"
+            }
+        ],
+        "amount": 1,
+        "code": "MXN",
+        "rate": 0.05206,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Malaysia"
+            },
+            {
+                "code": "fr",
+                "text": "Malaisie"
+            },
+            {
+                "code": "it",
+                "text": "Malaysia"
+            },
+            {
+                "code": "en",
+                "text": "Malaysia"
+            }
+        ],
+        "amount": 100,
+        "code": "MYR",
+        "rate": 19.51088,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Nigeria"
+            },
+            {
+                "code": "fr",
+                "text": "Nigéria"
+            },
+            {
+                "code": "it",
+                "text": "Nigeria"
+            },
+            {
+                "code": "en",
+                "text": "Nigeria"
+            }
+        ],
+        "amount": 1000,
+        "code": "NGN",
+        "rate": 1.15699,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Norwegen"
+            },
+            {
+                "code": "fr",
+                "text": "Norvège"
+            },
+            {
+                "code": "it",
+                "text": "Norvegia"
+            },
+            {
+                "code": "en",
+                "text": "Norway"
+            }
+        ],
+        "amount": 100,
+        "code": "NOK",
+        "rate": 8.13057,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Neuseeland"
+            },
+            {
+                "code": "fr",
+                "text": "Nouvelle-Zélande"
+            },
+            {
+                "code": "it",
+                "text": "Nuova Zelanda"
+            },
+            {
+                "code": "en",
+                "text": "New Zealand"
+            }
+        ],
+        "amount": 1,
+        "code": "NZD",
+        "rate": 0.54045,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Oman"
+            },
+            {
+                "code": "fr",
+                "text": "Oman"
+            },
+            {
+                "code": "it",
+                "text": "Oman"
+            },
+            {
+                "code": "en",
+                "text": "Oman"
+            }
+        ],
+        "amount": 1,
+        "code": "OMR",
+        "rate": 2.36719,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Panama"
+            },
+            {
+                "code": "fr",
+                "text": "Panama"
+            },
+            {
+                "code": "it",
+                "text": "Panama"
+            },
+            {
+                "code": "en",
+                "text": "Panama"
+            }
+        ],
+        "amount": 1,
+        "code": "PAB",
+        "rate": 0.93176,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Peru"
+            },
+            {
+                "code": "fr",
+                "text": "Pérou"
+            },
+            {
+                "code": "it",
+                "text": "Perù"
+            },
+            {
+                "code": "en",
+                "text": "Peru Nuevo"
+            }
+        ],
+        "amount": 100,
+        "code": "PEN",
+        "rate": 24.167,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Philippinen"
+            },
+            {
+                "code": "fr",
+                "text": "Philippines"
+            },
+            {
+                "code": "it",
+                "text": "Filippine"
+            },
+            {
+                "code": "en",
+                "text": "Philippines"
+            }
+        ],
+        "amount": 100,
+        "code": "PHP",
+        "rate": 1.62327,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Pakistan"
+            },
+            {
+                "code": "fr",
+                "text": "Pakistan"
+            },
+            {
+                "code": "it",
+                "text": "Pakistan"
+            },
+            {
+                "code": "en",
+                "text": "Pakistan"
+            }
+        ],
+        "amount": 100,
+        "code": "PKR",
+        "rate": 0.31761,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Polen"
+            },
+            {
+                "code": "fr",
+                "text": "Pologne"
+            },
+            {
+                "code": "it",
+                "text": "Polonia"
+            },
+            {
+                "code": "en",
+                "text": "Poland"
+            }
+        ],
+        "amount": 100,
+        "code": "PLN",
+        "rate": 21.83601,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Katar"
+            },
+            {
+                "code": "fr",
+                "text": "Qatar"
+            },
+            {
+                "code": "it",
+                "text": "Qatar"
+            },
+            {
+                "code": "en",
+                "text": "Qatar"
+            }
+        ],
+        "amount": 100,
+        "code": "QAR",
+        "rate": 24.9802,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Rumänien"
+            },
+            {
+                "code": "fr",
+                "text": "Roumanie"
+            },
+            {
+                "code": "it",
+                "text": "Romania"
+            },
+            {
+                "code": "en",
+                "text": "Romania New"
+            }
+        ],
+        "amount": 100,
+        "code": "RON",
+        "rate": 19.59622,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Serbien"
+            },
+            {
+                "code": "fr",
+                "text": "Serbie"
+            },
+            {
+                "code": "it",
+                "text": "Serbia"
+            },
+            {
+                "code": "en",
+                "text": "Serbia"
+            }
+        ],
+        "amount": 100,
+        "code": "RSD",
+        "rate": 0.82982,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Russland"
+            },
+            {
+                "code": "fr",
+                "text": "Russie"
+            },
+            {
+                "code": "it",
+                "text": "Russa"
+            },
+            {
+                "code": "en",
+                "text": "Russia"
+            }
+        ],
+        "amount": 100,
+        "code": "RUB",
+        "rate": 0.98977,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Saudi-Arabien"
+            },
+            {
+                "code": "fr",
+                "text": "Arabie Saoudite"
+            },
+            {
+                "code": "it",
+                "text": "Arabia Saudita"
+            },
+            {
+                "code": "en",
+                "text": "Saudi Arabia"
+            }
+        ],
+        "amount": 100,
+        "code": "SAR",
+        "rate": 24.24302,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Schweden"
+            },
+            {
+                "code": "fr",
+                "text": "Suède"
+            },
+            {
+                "code": "it",
+                "text": "Svezia"
+            },
+            {
+                "code": "en",
+                "text": "Sweden"
+            }
+        ],
+        "amount": 100,
+        "code": "SEK",
+        "rate": 8.32341,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Singapur"
+            },
+            {
+                "code": "fr",
+                "text": "Singapour"
+            },
+            {
+                "code": "it",
+                "text": "Singapore"
+            },
+            {
+                "code": "en",
+                "text": "Singapore"
+            }
+        ],
+        "amount": 1,
+        "code": "SGD",
+        "rate": 0.67199,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Thailand"
+            },
+            {
+                "code": "fr",
+                "text": "Thaïlande"
+            },
+            {
+                "code": "it",
+                "text": "Thailandia"
+            },
+            {
+                "code": "en",
+                "text": "Thailand"
+            }
+        ],
+        "amount": 100,
+        "code": "THB",
+        "rate": 2.56242,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Tunesien"
+            },
+            {
+                "code": "fr",
+                "text": "Tunisie"
+            },
+            {
+                "code": "it",
+                "text": "Tunisia"
+            },
+            {
+                "code": "en",
+                "text": "Tunisia"
+            }
+        ],
+        "amount": 100,
+        "code": "TND",
+        "rate": 29.0498,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Türkei"
+            },
+            {
+                "code": "fr",
+                "text": "Turquie"
+            },
+            {
+                "code": "it",
+                "text": "Turchia"
+            },
+            {
+                "code": "en",
+                "text": "Turkey"
+            }
+        ],
+        "amount": 100,
+        "code": "TRY",
+        "rate": 3.19089,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Taiwan"
+            },
+            {
+                "code": "fr",
+                "text": "Taïwan"
+            },
+            {
+                "code": "it",
+                "text": "Taiwan"
+            },
+            {
+                "code": "en",
+                "text": "Taiwan New"
+            }
+        ],
+        "amount": 100,
+        "code": "TWD",
+        "rate": 2.82661,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Tansania"
+            },
+            {
+                "code": "fr",
+                "text": "Tanzanie"
+            },
+            {
+                "code": "it",
+                "text": "Tanzania"
+            },
+            {
+                "code": "en",
+                "text": "Tanzania"
+            }
+        ],
+        "amount": 1000,
+        "code": "TZS",
+        "rate": 0.36515,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Ukraine"
+            },
+            {
+                "code": "fr",
+                "text": "Ukraine"
+            },
+            {
+                "code": "it",
+                "text": "Ucraina"
+            },
+            {
+                "code": "en",
+                "text": "Ukraine"
+            }
+        ],
+        "amount": 100,
+        "code": "UAH",
+        "rate": 2.52612,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "USA"
+            },
+            {
+                "code": "fr",
+                "text": "USA"
+            },
+            {
+                "code": "it",
+                "text": "USA"
+            },
+            {
+                "code": "en",
+                "text": "United States"
+            }
+        ],
+        "amount": 1,
+        "code": "USD",
+        "rate": 0.90961,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Uruguay"
+            },
+            {
+                "code": "fr",
+                "text": "Uruguay"
+            },
+            {
+                "code": "it",
+                "text": "Uruguay"
+            },
+            {
+                "code": "en",
+                "text": "Uruguay"
+            }
+        ],
+        "amount": 100,
+        "code": "UYU",
+        "rate": 2.29611,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Venezuela"
+            },
+            {
+                "code": "fr",
+                "text": "Venezuela"
+            },
+            {
+                "code": "it",
+                "text": "Venezuela"
+            },
+            {
+                "code": "en",
+                "text": "Venezuela"
+            }
+        ],
+        "amount": 100,
+        "code": "VES",
+        "rate": 2.58853,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Viet Nam"
+            },
+            {
+                "code": "fr",
+                "text": "Viêt Nam"
+            },
+            {
+                "code": "it",
+                "text": "Vietnam"
+            },
+            {
+                "code": "en",
+                "text": "Viet Nam"
+            }
+        ],
+        "amount": 10000,
+        "code": "VND",
+        "rate": 0.3738,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    },
+    {
+        "i18n": [
+            {
+                "code": "de",
+                "text": "Südafrika"
+            },
+            {
+                "code": "fr",
+                "text": "Afrique du sud"
+            },
+            {
+                "code": "it",
+                "text": "Africa del Sud"
+            },
+            {
+                "code": "en",
+                "text": "South Africa"
+            }
+        ],
+        "amount": 1,
+        "code": "ZAR",
+        "rate": 0.04965,
+        "rate_date": "2023-11-08T03:05:03.000+01:00",
+        "validity_date": "2023-11-09T23:59:59.000+01:00"
+    }
+]
