@@ -27,7 +27,7 @@
     "wrangler": "^3.15.0"
   },
   "dependencies": {
-    "@types/xxhashjs": "^0.2.3",
+    "@types/xxhashjs": "^0.2",
     "fast-xml-parser": "^4.3",
     "luxon": "^3.4",
     "xxhashjs": "^0.2"
