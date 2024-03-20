@@ -3,35 +3,14 @@ Federal Office for Customs and Border Security FOCBS Daily rates (exchange rates
 
 ## Purpose
 This small project was used to demonstrate the use of Cloudflare workers as part of a quick and easy API implementation. The (real) example provides exchange rate data from the Swiss Federal Customs Office. The data is published as an xml once a day, which we transformed into a REST API
+
 [Federal Office for Customs and Border Security FOCBS](https://www.rates.bazg.admin.ch/home)
 
 ## Dev
 
-### Setup
-
-`npm install wrangler@latest`
 
 
-#### cron
-
-`npm install xxhashjs``
-
-`npm install --save-dev @types/xxhashjs`
-
-`npm install luxon`
-
-`npm install --save-dev @types/luxon`
-
-## run cron
-
-`npm start`
-
-Initiate an event 
-
-`curl "http://localhost:{port}/__scheduled?cron=*+*+*+*+*"`
-
-
-### Documentation
+## Documentation
 
 * [DateTime Lib. Luxon](https://moment.github.io/luxon/)
 * [Cloudflare Workers](https://developers.cloudflare.com/workers/)

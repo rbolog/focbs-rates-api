@@ -19,4 +19,4 @@ KEY_PREFIX = "KEY_C_"
 [[kv_namespaces]]
 binding = "KV_CURRENCIES_RATES"
 id = ""
-preview_id = ""
+#preview_id = ""

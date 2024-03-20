@@ -1,0 +1,11 @@
+name = "focbs-rates-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[vars]
+KEY_PREFIX = "KEY_C_"
+
+[[kv_namespaces]]
+binding = "KV_CURRENCIES_RATES"
+id = ""
+preview_id = ""
