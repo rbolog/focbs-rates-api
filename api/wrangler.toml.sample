@@ -9,3 +9,6 @@ KEY_PREFIX = "KEY_C_"
 binding = "KV_CURRENCIES_RATES"
 id = ""
 preview_id = ""
+
+[placement]
+mode = "smart"
