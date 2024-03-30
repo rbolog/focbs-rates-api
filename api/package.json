@@ -14,7 +14,7 @@
     "wrangler": "^3.35"
   },
   "dependencies": {
-    "currency.js": "^2.0.4",
-    "luxon": "^3.4.3"
+    "currency.js": "^2.0",
+    "luxon": "^3.4"
   }
 }

@@ -19,7 +19,7 @@ export default {
 		const now = new Date();
 		const reqDate = `${now.getFullYear()}${(now.getMonth() +1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
 		const request = `${env.RATES_REQUEST_URL}&d=${reqDate}`;
-		console.log(`request=${request}`);
+		console.debug(`request=${request}`);
 		const response = await fetch(request);
 		if(response.ok){
 			const content = await response.text();
@@ -27,14 +27,14 @@ export default {
 				const hash = h32( content, 0 ).toString();
 				const previousHash = await env.KV_CURRENCIES_RATES.get('KEY_HASH');
 				if (hash !== previousHash) {
-					console.log('Update KV store');
+					console.info('Update KV store');
 					await parseAndStore(content,env);	
 					await env.KV_CURRENCIES_RATES.put('KEY_HASH',hash,{
 						metadata: { updated: now.toUTCString(),
 						expirationTtl: 86400},
 					});
 				} else {
-					console.log(`KV store is up-to-date. Hash: ${previousHash}`);
+					console.info(`KV store is up-to-date. Hash: ${previousHash}`);
 				}
 			} else {
 				await parseAndStore(content,env);
@@ -77,14 +77,14 @@ async function parseAndStore(data:string,env: Env): Promise<void> {
 			return a.valueOf() >= c.valueOf() ? a : c;
 		});
 		const currenciesRates : CurrencyRate[] = [...jObj.wechselkurse.devise.map((currency:any)=>toCurrencyRate(currency,rateDt,validityDt))]; 
-		console.log(`${currenciesRates.length} currencies converted.`);
+		console.info(`${currenciesRates.length} currencies converted.`);
+		const allRequests : Promise<void | null>[] = [];
 		for (const c of currenciesRates) {
-			await env.KV_CURRENCIES_RATES.put(`KEY_C_${c.code}`.toUpperCase(), `${JSON.stringify(c)}`,{
+			allRequests.push(env.KV_CURRENCIES_RATES.put(`KEY_C_${c.code}`.toUpperCase(), `${JSON.stringify(c)}`,{
 				expiration: validityDt.plus({hours:6}).valueOf() / 1000
-			});
+			}));
+			await Promise.all(allRequests);
 		}
-		//console.log(`${JSON.stringify((await env.KV_CURRENCIES_RATES.list()).keys)}`);
-		console.log(await env.KV_CURRENCIES_RATES.get('KEY_EUR'));
 	} else {
 		console.error(`Invalid data. ${data}`)
 	}
