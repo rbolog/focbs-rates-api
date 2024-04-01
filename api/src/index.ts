@@ -28,6 +28,21 @@ export default {
 			cf_ipcountry : requestHeaders.get("cf-ipcountry"),
 			x_real_ip : requestHeaders.get("x-real-ip"),
 			mf_original_url : requestHeaders.get("mf-original-url"),
+			timestamp : Date.now()
+		}
+
+		// First level of request validation.
+		if (query.length > 50) {
+			console.error(JSON.stringify(info));
+			return buildErrorResponse('Bad request. code:0x00',400);
+		}
+		if (objectName.length > 25) {
+			console.error(JSON.stringify(info));
+			return buildErrorResponse('Bad request. code:0x01',400);
+		}
+		if (objectName.split('/') > 4) {
+			console.error(JSON.stringify(info));
+			return buildErrorResponse('Bad request. code:0x02',400);
 		}
 
 		// Return a response to this request to avoid errors. When using a browser
@@ -35,17 +50,6 @@ export default {
 			return new Response(null, {
 				status: 204 
 			});
-		}
-
-		// validate parameters
-		const validationResponse = validateQuery(query);
-		if (validationResponse instanceof Response) {
-			const msg = {
-				content : await validationResponse.clone().json(),
-				info : info,
-				}
-			console.error(JSON.stringify(msg));
-			return validationResponse;
 		}
 
 		// Construct the cache key from the URL
@@ -61,7 +65,7 @@ export default {
 		// The Api accept only GET
 		if (request.method === 'GET') {
 			// Create Helper that need request and CloudFlare Env
-			const focbsApi = new FocbsApi(query.split('&'),env);
+			const focbsApi = new FocbsApi(objectName, query.split('&'),env);
 			// Handles the request
 			await focbsApi.process();
 			// read the response
@@ -88,38 +92,30 @@ export default {
 }
 
 /**
- * Helper class that manage queries.
- * The possible queries are:
- * - ?all
- * - ?currency={code}
- * - ?currency={code}&currency_target={code}&amount={value}
- * - ?currency_target={code}&amount={value}
- * The query above uses the default parameter currency=CHF
+ * Helper class that manage requests.
  */
 class FocbsApi {
+	private objectName : string | null;
 	private amount : number | null = null;
-	private currency : string | null = null;
-	private currency_exist : string | null = null;
-	private currency_target : string | null = null;
-	private all : boolean = false;
+	private from : string | null = null;
+	private to : string | null = null;
+	private code : string | null = null;
 	private response : Response | null;
 	private headers : Headers | null;
 	private env: Env | null;
 
-	constructor(query:string[], env: Env) {
+
+	constructor(objectName: string,query:string[], env: Env) {
 		this.env = env;
+		this.objectName = objectName.toLowerCase();
 		query.forEach((i)=>{
 			const p = i.split('=');
 			if (p[0].toLowerCase() === 'amount') {
 				this.amount = Number.parseFloat(p[1])
-			} else if (p[0].toLowerCase() === 'currency') {
-				this.currency = p[1].toUpperCase();
-			} else if (p[0].toLowerCase() === 'currency_exist') {
-				this.currency_exist = p[1].toUpperCase();
-			} else if (p[0].toLowerCase() === 'currency_target') {
-				this.currency_target = p[1].toUpperCase();
-			} else if (p[0].toLowerCase() === 'all') {
-				this.all = true;
+			} else if (p[0].toLowerCase() === 'from') {
+				this.from = p[1].toUpperCase();
+			} else if (p[0].toLowerCase() === 'to') {
+				this.to = p[1].toUpperCase();
 			}
 		});
 
@@ -129,13 +125,39 @@ class FocbsApi {
 	} // End of constructor
 
 	public async process() : Promise<void> {
-		if (this.all) {
+		const objectNameItems = this.objectName.toLowerCase().split('/');
+		const regex = /^[A-Z]{3}$/;
+
+		// Parameters validation
+		if (!this.amount && this.to) {
+			this.response = buildErrorResponse('Bad request. amount is not a number',400);
+			return;
+		}
+		
+		if (this.from && !this.from.toUpperCase().match(regex)) {
+			this.response = buildErrorResponse('Bad request. Invalid from',400);
+			return;
+		}
+		
+		if (this.to && !this.to.toUpperCase().match(regex)) {
+			this.response = buildErrorResponse('Bad request. Invalid to',400);
+			return;
+		}
+
+		if (this.code && !this.code.toUpperCase().match(regex)) {
+			this.response = buildErrorResponse('Bad request. Invalid code',400);
+			return;
+		}
+
+		if (objectNameItems[0] === 'all') {
 			await this.getAll();
-		} else if (this.currency_exist) {
+		} else if(objectNameItems[0] === 'currency' && objectNameItems[1] === 'exist') {
+			this.code = objectNameItems[2].toUpperCase();
 			await this.isCurrencyExist();
-		} else if (this.currency && !this.currency_target  && !this.amount) {
+		} else if(objectNameItems[0] === 'currency') {
+			this.code = objectNameItems[1].toUpperCase();
 			await this.getCurrency();
-		} else if (this.currency_target && this.amount) {
+		} else if(objectNameItems[0] === 'rate') {
 			await this.getPairRate();
 		} else {
 			this.response = buildErrorResponse('Bad request',400);	
@@ -167,7 +189,7 @@ class FocbsApi {
 	}
 	
 	private async getCurrency() : Promise<void> {
-		const currencyRate : CurrencyRate | null = await this.getKv(this.currency);
+		const currencyRate : CurrencyRate | null = await this.getKv(this.code);
 		if (currencyRate) {
 			const s_maxage = Interval.fromDateTimes(DateTime.now(),DateTime.fromISO(currencyRate.validity_date)).length('seconds');
 			this.headers.append('Last-Modified', currencyRate.rate_date);
@@ -177,7 +199,7 @@ class FocbsApi {
 				status: 200
 			});
 		} else {
-			this.response = buildErrorResponse(`${this.currency} not found`,404);
+			this.response = buildErrorResponse(`${this.code} not found`,404);
 		}
 	}
 	
@@ -188,16 +210,16 @@ class FocbsApi {
 		let validity : string = "Not determined";
 		let usedRate = defaultRate;
 		
-		if (!this.currency) {
-			this.currency = defaultCurrency;
+		if (!this.from) {
+			this.from = defaultCurrency;
 		}
 		
-		if (this.currency !== this.currency_target) {
-			const currencyRate: CurrencyRate | null = this.currency === defaultCurrency ? await this.getKv(this.currency_target) : await this.getKv(this.currency); 
-			const isValid: boolean = currencyRate && this.currency && this.currency_target && (this.currency_target === defaultCurrency || this.currency === defaultCurrency);
+		if (this.from !== this.to) {
+			const currencyRate: CurrencyRate | null = this.from === defaultCurrency ? await this.getKv(this.to) : await this.getKv(this.from); 
+			const isValid: boolean = currencyRate && this.from && this.to && (this.to === defaultCurrency || this.from === defaultCurrency);
 		
 			if (isValid) {
-				const rate = this.currency_target === defaultCurrency ? 1.0 / currencyRate.rate : currencyRate.rate;
+				const rate = this.to === defaultCurrency ? 1.0 / currencyRate.rate : currencyRate.rate;
 				value = currency_helper(currencyRate.amount * rate * this.amount); 
 				validity = currencyRate.validity_date;
 				usedRate = [rate,currencyRate.amount]; 
@@ -210,11 +232,11 @@ class FocbsApi {
 		if (!(this.response instanceof Response)) {
 			const content: PairRate = {
 			from: {
-				currency: this.currency,
+				currency: this.from,
 				amount: currency_helper(this.amount, currency_format).format(),
 			},
 			to: {
-				currency: this.currency_target,
+				currency: this.to,
 				amount: currency_helper(value, currency_format).format(),
 			},
 			validity: {
@@ -232,9 +254,9 @@ class FocbsApi {
 	}
 
 	private async isCurrencyExist () : Promise<void> {
-		const value = await this.getKv(this.currency_exist);
+		const value = await this.getKv(this.code);
 		const content = {
-			currency_code : this.currency_exist,
+			currency_code : this.code,
 			is_exist : value !== null,
 		};
 		this.response = new Response(JSON.stringify(content), {

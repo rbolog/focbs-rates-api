@@ -24,7 +24,7 @@
     "@cloudflare/workers-types": "^4",
     "@types/luxon": "^3.3",
     "typescript": "^5.0",
-    "wrangler": "^3.35.0"
+    "wrangler": "^3"
   },
   "dependencies": {
     "@types/xxhashjs": "^0.2",
