@@ -40,7 +40,7 @@ export default {
 			console.error(JSON.stringify(info));
 			return buildErrorResponse('Bad request. code:0x01',400);
 		}
-		if (objectName.split('/') > 4) {
+		if (objectName.split('/').length > 4) {
 			console.error(JSON.stringify(info));
 			return buildErrorResponse('Bad request. code:0x02',400);
 		}
@@ -220,11 +220,12 @@ class FocbsApi {
 		
 			if (isValid) {
 				const rate = this.to === defaultCurrency ? 1.0 / currencyRate.rate : currencyRate.rate;
-				value = currency_helper(currencyRate.amount * rate * this.amount); 
+				const rateAmount = this.to === defaultCurrency ? 1.0 / currencyRate.amount : currencyRate.amount;
+				value = currency_helper(rateAmount * rate * this.amount); 
 				validity = currencyRate.validity_date;
-				usedRate = [rate,currencyRate.amount]; 
+				usedRate = [rate,rateAmount]; 
 			} else {
-				this.response = buildErrorResponse(`Currencies pair are invalid. From = ${this.currency} To = ${this.currency_target}.`,400);
+				this.response = buildErrorResponse(`Currencies pair are invalid. From = ${this.from} To = ${this.to}.`,400);
 				return;
 			}
 		} 

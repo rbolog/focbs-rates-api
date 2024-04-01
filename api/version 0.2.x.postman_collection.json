@@ -1,0 +1,1240 @@
+{
+	"info": {
+		"_postman_id": "9f687f00-c21c-4554-81a3-6126025bd9c6",
+		"name": "version 0.2.x",
+		"description": "Swiss Federal Office of Customs and Border Security FOCBS Publish daily, exchange rates as XML/PDF file. We use this source to provide API access to the (only) current exchange rates.\n\nContact Support:\n Name: Github",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25110830",
+		"_collection_link": "https://www.postman.com/kurdy/workspace/ilab-focbs-rates-api/collection/25110830-9f687f00-c21c-4554-81a3-6126025bd9c6?action=share&source=collection_link&creator=25110830"
+	},
+	"item": [
+		{
+			"name": "all",
+			"item": [
+				{
+					"name": "getAll OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Number of currencies > 70\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.gt(70);",
+									"});",
+									"pm.test(\"Currency code is AED\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].code).to.eq(\"AED\");",
+									"});",
+									"// Add schema validation test",
+									"pm.test(\"Schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"      type: \"object\",",
+									"      properties: {",
+									"        i18n: {",
+									"          type: \"array\",",
+									"          items: {",
+									"            type: \"object\",",
+									"            properties: {",
+									"              code: { type: \"string\" },",
+									"              text: { type: \"string\" }",
+									"            },",
+									"            required: [\"code\", \"text\"]",
+									"          }",
+									"        },",
+									"        amount: { type: \"number\" },",
+									"        code: { type: \"string\" },",
+									"        rate: { type: \"number\" },",
+									"        rate_date: { type: \"string\" },",
+									"        validity_date: { type: \"string\" }",
+									"      },",
+									"      required: [\"i18n\", \"amount\", \"code\", \"rate\", \"rate_date\", \"validity_date\"]",
+									"    }",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/all",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "currency",
+			"item": [
+				{
+					"name": "exist",
+					"item": [
+						{
+							"name": "get Currency Exist true",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"is_exist == true\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.is_exist).to.eq(true);",
+											"});",
+											"pm.test(\"currency_code == USD\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.currency_code).to.eq('USD');",
+											"});",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"  var schema = {",
+											"    type: \"object\",",
+											"    properties: {",
+											"      currency_code: { type: \"string\" },",
+											"      is_exist: { type: \"boolean\" }",
+											"    },",
+											"    required: [\"currency_code\", \"is_exist\"]",
+											"  };",
+											"",
+											"  var response = pm.response.json();",
+											"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/json"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/currency/exist/:code",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"currency",
+										"exist",
+										":code"
+									],
+									"variable": [
+										{
+											"key": "code",
+											"value": "USD"
+										}
+									]
+								},
+								"description": "Return a currency for a code. Like EUR, USD, ..."
+							},
+							"response": []
+						},
+						{
+							"name": "get Currency Exist false",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"is_exist == false\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.is_exist).to.eq(false);",
+											"});",
+											"pm.test(\"currency_code == CPL\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.currency_code).to.eq('CPL');",
+											"});",
+											"",
+											"pm.test(\"Schema is valid\", function () {",
+											"  var schema = {",
+											"    type: \"object\",",
+											"    properties: {",
+											"      currency_code: { type: \"string\" },",
+											"      is_exist: { type: \"boolean\" }",
+											"    },",
+											"    required: [\"currency_code\", \"is_exist\"]",
+											"  };",
+											"",
+											"  var response = pm.response.json();",
+											"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/json"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/currency/exist/:code",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"currency",
+										"exist",
+										":code"
+									],
+									"variable": [
+										{
+											"key": "code",
+											"value": "CPL"
+										}
+									]
+								},
+								"description": "Return a currency for a code. Like EUR, USD, ..."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get Currency OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Currency code is AED\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.code).to.eq(\"EUR\");",
+									"});",
+									"// Validate the response schema for the 'Currency' component",
+									"pm.test(\"Schema is valid for the 'Currency' component\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      i18n: {",
+									"        type: \"array\",",
+									"        items: {",
+									"          type: \"object\",",
+									"          properties: {",
+									"            code: { type: \"string\" },",
+									"            text: { type: \"string\" }",
+									"          },",
+									"          required: [\"code\", \"text\"]",
+									"        }",
+									"      },",
+									"      amount: { type: \"number\" },",
+									"      code: { type: \"string\" },",
+									"      rate: { type: \"number\" },",
+									"      rate_date: { type: \"string\" },",
+									"      validity_date: { type: \"string\" }",
+									"    },",
+									"    required: [\"i18n\", \"amount\", \"code\", \"rate\", \"rate_date\", \"validity_date\"]",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/currency/:code",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"currency",
+								":code"
+							],
+							"variable": [
+								{
+									"key": "code",
+									"value": "EUR",
+									"description": "(Required) Currency code"
+								}
+							]
+						},
+						"description": "Return a currency for a code. Like EUR, USD, ..."
+					},
+					"response": []
+				},
+				{
+					"name": "get Currency Error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"// Add schema validation test for the error response",
+									"pm.test(\"Schema validation for error response\", function () {",
+									"    var schema = {",
+									"        type: \"object\",",
+									"        properties: {",
+									"            error_date: {",
+									"                type: \"string\"",
+									"            },",
+									"            error_msg: {",
+									"                type: \"string\"",
+									"            }",
+									"        },",
+									"        required: [\"error_date\", \"error_msg\"]",
+									"    };",
+									"",
+									"    var response = pm.response.json();",
+									"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/currency/:code",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"currency",
+								":code"
+							],
+							"variable": [
+								{
+									"key": "code",
+									"value": "CPL",
+									"description": "(Required) Currency code"
+								}
+							]
+						},
+						"description": "Return a currency for a code. Like EUR, USD, ..."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rate",
+			"item": [
+				{
+					"name": "get Rate OK to CHF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"test rate amount\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.rate[1]).to.eql(0.001);",
+									"});",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      from: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          currency: { type: \"string\" },",
+									"          amount: { type: \"string\" }",
+									"        },",
+									"        required: [\"currency\", \"amount\"]",
+									"      },",
+									"      to: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          currency: { type: \"string\" },",
+									"          amount: { type: \"string\" }",
+									"        },",
+									"        required: [\"currency\", \"amount\"]",
+									"      },",
+									"      validity: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          request_date: { type: \"string\" },",
+									"          validity_date: { type: \"string\" }",
+									"        },",
+									"        required: [\"request_date\", \"validity_date\"]",
+									"      },",
+									"      rate: {",
+									"        type: \"array\"",
+									"      }",
+									"    },",
+									"    required: [\"from\", \"to\", \"validity\", \"rate\"],",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?from=CLP&to=CHF&amount=1000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "CLP",
+									"description": "Source currency code. default is CHF"
+								},
+								{
+									"key": "to",
+									"value": "CHF",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "1000000",
+									"description": "(Required) Amount to convert"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "get Rate OK from CHF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"test rate amount\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.rate[1]).to.eql(1000);",
+									"});",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      from: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          currency: { type: \"string\" },",
+									"          amount: { type: \"string\" }",
+									"        },",
+									"        required: [\"currency\", \"amount\"]",
+									"      },",
+									"      to: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          currency: { type: \"string\" },",
+									"          amount: { type: \"string\" }",
+									"        },",
+									"        required: [\"currency\", \"amount\"]",
+									"      },",
+									"      validity: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          request_date: { type: \"string\" },",
+									"          validity_date: { type: \"string\" }",
+									"        },",
+									"        required: [\"request_date\", \"validity_date\"]",
+									"      },",
+									"      rate: {",
+									"        type: \"array\"",
+									"      }",
+									"    },",
+									"    required: [\"from\", \"to\", \"validity\", \"rate\"],",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?to=CLP&amount=100",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "",
+									"description": "Source currency code. default is CHF",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "CLP",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "get Rate OK to USD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"test rate amount\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.rate[1]).to.eql(1);",
+									"});",
+									"",
+									"pm.test(\"Schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      from: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          currency: { type: \"string\" },",
+									"          amount: { type: \"string\" }",
+									"        },",
+									"        required: [\"currency\", \"amount\"]",
+									"      },",
+									"      to: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          currency: { type: \"string\" },",
+									"          amount: { type: \"string\" }",
+									"        },",
+									"        required: [\"currency\", \"amount\"]",
+									"      },",
+									"      validity: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          request_date: { type: \"string\" },",
+									"          validity_date: { type: \"string\" }",
+									"        },",
+									"        required: [\"request_date\", \"validity_date\"]",
+									"      },",
+									"      rate: {",
+									"        type: \"array\"",
+									"      }",
+									"    },",
+									"    required: [\"from\", \"to\", \"validity\", \"rate\"],",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?from=CHF&to=USD&amount=100.55",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "CHF",
+									"description": "Source currency code. default is CHF"
+								},
+								{
+									"key": "to",
+									"value": "USD",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100.55",
+									"description": "(Required) Amount to convert"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "get Rate Error Invalid to",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test Invalid to\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('Invalid to');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?from=CHF&to=XXXX&amount=100.55",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "CHF",
+									"description": "Source currency code. default is CHF"
+								},
+								{
+									"key": "to",
+									"value": "XXXX",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100.55",
+									"description": "(Required) Amount to convert"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "get Rate Error Invalid from",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test Invalid from\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('Invalid from');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?from=XXXX&to=USD&amount=100.55",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "XXXX",
+									"description": "Source currency code. default is CHF"
+								},
+								{
+									"key": "to",
+									"value": "USD",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100.55",
+									"description": "(Required) Amount to convert"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "get Rate Error invalid pair from",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test Currencies pair are invalid\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('Currencies pair are invalid');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?from=XXX&to=USD&amount=100.55",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "XXX",
+									"description": "Source currency code. default is CHF"
+								},
+								{
+									"key": "to",
+									"value": "USD",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100.55",
+									"description": "(Required) Amount to convert"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "get Rate Error invalid pair to",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test Currencies pair are invalid\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('Currencies pair are invalid');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?from=CHF&to=XXX&amount=100.55",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "CHF",
+									"description": "Source currency code. default is CHF"
+								},
+								{
+									"key": "to",
+									"value": "XXX",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100.55",
+									"description": "(Required) Amount to convert"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Errors",
+			"item": [
+				{
+					"name": "getAll Error 0x01",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test code 0x01\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('0x01');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/all/sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"all",
+								"sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf"
+							]
+						},
+						"description": "The endpoint makes an HTTP GET request to retrieve data from the specified URL.\n\n### Response\n\nThe response returns a status code of 400 and the content type is set to text/plain. The response body follows the JSON schema below:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"error_date\": {\n      \"type\": \"string\"\n    },\n    \"error_msg\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "getAll Error 0x02",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test code 0x02\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('0x02');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate/aaa/bbb/ccc/ddd",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate",
+								"aaa",
+								"bbb",
+								"ccc",
+								"ddd"
+							]
+						},
+						"description": "The endpoint makes an HTTP GET request to retrieve data from the specified URL.\n\n### Response\n\nThe response returns a status code of 400 and the content type is set to text/plain. The response body follows the JSON schema below:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"error_date\": {\n      \"type\": \"string\"\n    },\n    \"error_msg\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "get Error 0x00",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"test code 0x00\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_msg).to.contain('0x00');",
+									"});",
+									"",
+									"// Test to validate the error response schema",
+									"pm.test(\"Error response schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      error_date: { type: \"string\" },",
+									"      error_msg: { type: \"string\" }",
+									"    },",
+									"    required: [\"error_date\", \"error_msg\"]",
+									"  };",
+									"",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/rate?to=CLP&amount=100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"rate"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "",
+									"description": "Source currency code. default is CHF",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "CLP",
+									"description": "(Required) Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+								}
+							]
+						},
+						"description": "Return a rate for a pair of currencies."
+					},
+					"response": []
+				},
+				{
+					"name": "getAll Error -> 403 by cloudflare not in Switzerland",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/json"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/all",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{api_key}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "postman-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

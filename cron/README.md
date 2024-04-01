@@ -1,23 +1,38 @@
 # cron worker
 
+## Purpose
+
+Periodically extract data from the federal site, transform it, and store each element in a Cloudflare key/value store.
+
 ## Dev
 
 ### Setup
 
-`npm install wrangler@latest`
+`cd ./cron`
+
+If you have not already done so `npm install wrangler --save-dev`
 
 `cp wrangler.toml.sample wrangler.toml`
 
+`npm install`
 
-#### cron dependencies
+#### Create key/value store
 
-`npm install xxhashjs`
+[documentation](https://developers.cloudflare.com/kv/get-started/)
 
-`npm install --save-dev @types/xxhashjs`
+`npx wrangler kv:namespace create KV_CURRENCIES_RATES`
 
+Result: **copy id in wrangler.toml**
+```text
+⛅️ wrangler 3.35.0
+-------------------
+🌀 Creating namespace with title "focbs-rates-cron-KV_CURRENCIES_RATES"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
+{ binding = "KV_CURRENCIES_RATES", id = "xxxx" }
+```
 
-
-## run cron
+### run cron
 
 `npx wrangler dev --test-scheduled`
 
@@ -25,21 +40,8 @@ Initiate an event
 
 `curl "http://localhost:{port}/__scheduled?cron=*+*+*+*+*"`
 
-## Setup and deploy
+### Deploy
 
-`cd cron`
-
-`npx wrangler kv:namespace create KV_CURRENCIES_RATES`
-
-Result: copy id in wrangler.toml
-```text
-⛅️ wrangler 3.35.0
--------------------
-🌀 Creating namespace with title "focbs-rates-cron-KV_CURRENCIES_RATES"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-{ binding = "KV_CURRENCIES_RATES", id = "0187f7b692f44e43bcb0100a242b9b44" }
-```
 `npx wrangler deploy`
 
 Result:

@@ -75,7 +75,7 @@ paths:
           example: EUR
   /currency/exist/{code}:
     get:
-      description: Return a currency for a code. Like EUR, USD, ...
+      description: Test if currency exists for a code. Like EUR, USD, ...
       operationId: isCurrencyExist
       responses:
         '200':
@@ -83,7 +83,7 @@ paths:
           content:
             text/json:
               schema:
-                $ref: '#/components/schemas/Currency'
+                $ref: '#/components/schemas/Exist'
         403:
           description: Forbidden. Could be blocked by cloudflare security features
           content:
@@ -158,7 +158,7 @@ components:
         description: All currencies
         type: array
         items:
-            - $ref: '#/components/schemas/Currency'
+            $ref: '#/components/schemas/Currency'
     Currency:
         description: currency rate informations.
         type: object
@@ -176,13 +176,13 @@ components:
             amount:
                 type: integer
             code:
-                - $ref: '#/components/schemas/Code'
+                $ref: '#/components/schemas/Code'
             rate:
                 type: number
             rate_date:
-                - $ref: '#/components/schemas/DateTimeISO'
+                $ref: '#/components/schemas/DateTimeISO'
             validity_date:
-                - $ref: '#/components/schemas/DateTimeISO'
+                $ref: '#/components/schemas/DateTimeISO'
         required:
             - i18n
             - amount
@@ -195,16 +195,16 @@ components:
         type: object
         properties:
             from:
-                - $ref: '#/components/schemas/Rate'
+                $ref: '#/components/schemas/Rate'
             to:
-                - $ref: '#/components/schemas/Rate'
+                $ref: '#/components/schemas/Rate'
             validity:
                 type: object
                 properties:
                     request_date:
-                        - $ref: '#/components/schemas/DateTimeISO'
+                        $ref: '#/components/schemas/DateTimeISO'
                     validity_date:
-                        - $ref: '#/components/schemas/DateTimeISO'
+                        $ref: '#/components/schemas/DateTimeISO'
             rate:
                 type: array
                 minItems: 2
@@ -222,9 +222,9 @@ components:
         type: object
         properties:
             currency:
-                - $ref: '#/components/schemas/Code'
+                $ref: '#/components/schemas/Code'
             amount:
-                - $ref: '#/components/schemas/Amount'
+                $ref: '#/components/schemas/Amount'
         required:
             - currency
             - amount
@@ -240,12 +240,23 @@ components:
         description: Result amount formated like ###.##
         type: string
         pattern: ^\\d*\\.\\d{2}
+    CurrencyExist:
+      description: result of request currenvy/exist/{code}
+      type: object
+      properties:
+          currency_code:
+              $ref: '#/components/schemas/Code'
+          is_exist:
+              type: boolean
+      required:
+          - currency
+          - amount
     Error:
       description: aa
       type: object
       properties:
         error_date:
-            - $ref: '#/components/schemas/DateTimeISO'
+            $ref: '#/components/schemas/DateTimeISO'
         error_msg:
             type: string
       required:
