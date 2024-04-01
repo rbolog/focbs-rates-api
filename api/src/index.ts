@@ -1,5 +1,5 @@
 import { DateTime, Interval } from "luxon"
-import {CurrencyI18n,CurrencyRate,PairRate,Error} from "../../commons/types" 
+import {CurrencyRate,PairRate,Error} from "../../commons/types" 
 import currency from "currency.js";
 
 const currency_helper = currency;
@@ -169,7 +169,7 @@ class FocbsApi {
 	}// End of getResponse 
 
 	private async getAll() : Promise<void>{
-		const keys : any = await this.listKeys();
+		const keys = await this.listKeys();
 		if (keys.list_complete) {
 			const allRequests : Promise<string | null>[] = [];
 			for (const k of keys.keys) {
@@ -268,12 +268,11 @@ class FocbsApi {
 
 	private getKv(key : string,noPrefix : boolean = false) : Promise<string | null> {
 		const keyValue = noPrefix ? key : `${this.env.KEY_PREFIX}${key}`; 
-		console.log(keyValue);
 		return this.env.KV_CURRENCIES_RATES.get(keyValue,{ type: 'json' })
 	}
 
-	private listKeys() : Promise<any | null> {
-		return this.env.KV_CURRENCIES_RATES.list({ prefix: this.env.KEY_PREFIX });;
+	private listKeys() : Promise<unknown | null> {
+		return this.env.KV_CURRENCIES_RATES.list({ prefix: this.env.KEY_PREFIX });
 	}
 }
 
@@ -290,39 +289,5 @@ const buildErrorResponse = (msg : string = "Undefined. 😖", status : number = 
 	return new Response(JSON.stringify(content), {
 		status: status});
 } 
-
-const validateQuery = (query : string) : Response | null => {
-	let response : Response | null = null
-	// Avoid an huge request
-	if (query.length > 100) {
-		return buildErrorResponse('Bad request. code:0x00',400);
-	}
-
-	// Now check parameters
-	const entries: string [] = query.split('&');
-	if(entries.length > 3) {
-		return buildErrorResponse('Bad request. code:0x01',400);
-	}
-
-	const regex = /^[A-Z]{3}$/;
-	for (let i of entries) {
-		const [key, value] = i.split('=');
-		const lowerCaseKey = key.toLowerCase();
-
-		if (lowerCaseKey === 'amount' && Number.isNaN(Number.parseFloat(value))) {
-			return buildErrorResponse('Bad request. code:0x02',400);
-		}
-		
-		if (lowerCaseKey === 'currency' && !value.toUpperCase().match(regex)) {
-			return buildErrorResponse('Bad request. code:0x03',400);
-		}
-		
-		if (lowerCaseKey === 'currency_target' && !value.toUpperCase().match(regex)) {
-			return buildErrorResponse('Bad request. code:0x04',400);
-		}
-	}
-
-	return null;
-};
 
 const currency_format = { precision: 2, decimal: '.',separator: '', pattern: '#' };

@@ -19,7 +19,6 @@ export default {
 		const now = new Date();
 		const reqDate = `${now.getFullYear()}${(now.getMonth() +1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
 		const request = `${env.RATES_REQUEST_URL}&d=${reqDate}`;
-		console.debug(`request=${request}`);
 		const response = await fetch(request);
 		if(response.ok){
 			const content = await response.text();
@@ -76,7 +75,7 @@ async function parseAndStore(data:string,env: Env): Promise<void> {
 		const validityDt = validityDates.reduce((a,c)=>{
 			return a.valueOf() >= c.valueOf() ? a : c;
 		});
-		const currenciesRates : CurrencyRate[] = [...jObj.wechselkurse.devise.map((currency:any)=>toCurrencyRate(currency,rateDt,validityDt))]; 
+		const currenciesRates : CurrencyRate[] = [...jObj.wechselkurse.devise.map((currency:unknown)=>toCurrencyRate(currency,rateDt,validityDt))]; 
 		console.info(`${currenciesRates.length} currencies converted.`);
 		const allRequests : Promise<void | null>[] = [];
 		for (const c of currenciesRates) {
@@ -90,7 +89,7 @@ async function parseAndStore(data:string,env: Env): Promise<void> {
 	}
 }
 
-function toCurrencyRate (currency : any,rateDt:DateTime,validityDt:DateTime) : CurrencyRate {
+function toCurrencyRate (currency : unknown,rateDt:DateTime,validityDt:DateTime) : CurrencyRate {
 	/**
 	 	<devise code="eur">
 			<land_de>Europäische Währungsunion</land_de>

@@ -29,3 +29,4 @@ package-lock.json
 **/*.original
 **/*.old
 **/*.perso
+api/CF-WORKER.postman_environment.json
