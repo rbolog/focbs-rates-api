@@ -48,6 +48,7 @@ Notes:
 
 1. [jq is a lightweight and flexible command-line JSON processor](https://jqlang.github.io/jq/)
 1. The `https://ratesapi.ilab-dgnsi-vd.ch` url is currently restricted to Switzerland.
+    
     a. This service is for demonstration purposes only. There is no guarantee of availability.    
 
 
