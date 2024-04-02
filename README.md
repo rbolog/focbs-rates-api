@@ -16,7 +16,9 @@ Periodically extract data from the federal site, transform it, and store each el
 
 #### Project README
 
-`./cron/README.md`
+* `./cron/README.md`
+* [Github cron root](https://github.com/rbolog/focbs-rates-api/tree/main/cron)
+
 
 ### API worker
 
@@ -26,7 +28,8 @@ API implemention, using Cloudflare worker
 
 #### Project README
 
-`./api/README.md`
+* `./api/README.md` 
+* [Github api root](https://github.com/rbolog/focbs-rates-api/tree/main/api)
 
 ### Requests samples
 
