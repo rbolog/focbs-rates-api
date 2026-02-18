@@ -2,6 +2,8 @@
 
 0.1.0 first deployed version
 
-0.1.1 Update validity date to manage array of validity dates and correct some bugs  
+0.1.1 Update validity date to manage array of validity dates and correct some bugs
 
 0.2.3 eslint and remove dead code align with api version
+
+0.2.4 update fast-xml-parser due to CVE-2026-26278
