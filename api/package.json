@@ -1,22 +1,22 @@
 {
-  "name": "api",
-  "version": "0.2.3",
-  "private": true,
-  "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "start": "wrangler dev"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4",
-    "@types/luxon": "^3.3",
-    "eslint": "^8.57",
-    "typescript": "^5.4",
-    "typescript-eslint": "^7.4",
-    "wrangler": "^3"
-  },
-  "dependencies": {
-    "currency.js": "^2.0",
-    "luxon": "^3.4"
-  }
+	"name": "api",
+	"version": "0.2.4",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4",
+		"@types/luxon": "^3.7",
+		"eslint": "^10.0",
+		"typescript": "^5.9",
+		"typescript-eslint": "^8.56",
+		"wrangler": "^4"
+	},
+	"dependencies": {
+		"currency.js": "^2.0",
+		"luxon": "^3.7"
+	}
 }

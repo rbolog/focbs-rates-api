@@ -1,13 +1,13 @@
 import {XMLParser} from 'fast-xml-parser';
 import {h32} from 'xxhashjs';
-import { DateTime } from "luxon"; 
-import {CurrencyI18n,CurrencyRate} from "../../commons/types" 
+import { DateTime } from "luxon";
+import {CurrencyI18n,CurrencyRate} from "../../commons/types"
 
 export interface Env {
-	DISABLE_HASH : boolean;
-	RATES_REQUEST_URL : string;
+	DISABLE_HASH: boolean;
+	RATES_REQUEST_URL: string;
 	KV_CURRENCIES_RATES: KVNamespace;
-	KEY_PREFIX : string;
+	KEY_PREFIX: string;
 }
 
 export default {
@@ -17,36 +17,34 @@ export default {
 		// Source and informations https://www.rates.bazg.admin.ch/home
 		// https://www.backend-rates.bazg.admin.ch/api/xmldaily?d=20230927&locale=en
 		const now = new Date();
-		const reqDate = `${now.getFullYear()}${(now.getMonth() +1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
+		const reqDate = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
 		const request = `${env.RATES_REQUEST_URL}&d=${reqDate}`;
 		const response = await fetch(request);
-		if(response.ok){
+		if (response.ok) {
 			const content = await response.text();
 			if (!env.DISABLE_HASH) {
-				const hash = h32( content, 0 ).toString();
+				const hash = h32(content, 0).toString();
 				const previousHash = await env.KV_CURRENCIES_RATES.get('KEY_HASH');
 				if (hash !== previousHash) {
 					console.info('Update KV store');
-					await parseAndStore(content,env);	
-					await env.KV_CURRENCIES_RATES.put('KEY_HASH',hash,{
-						metadata: { updated: now.toUTCString(),
-						expirationTtl: 86400},
+					await parseAndStore(content, env);
+					await env.KV_CURRENCIES_RATES.put('KEY_HASH', hash, {
+						metadata: { updated: now.toUTCString(), expirationTtl: 86400 },
 					});
 				} else {
 					console.info(`KV store is up-to-date. Hash: ${previousHash}`);
 				}
 			} else {
-				await parseAndStore(content,env);
+				await parseAndStore(content, env);
 			}
 		} else {
 			console.error(`cron fetch error: ${response.statusText})`);
-		}	
-	}
-}
-
+		}
+	},
+};
 
 // https://www.npmjs.com/package/fast-xml-parser
-async function parseAndStore(data:string,env: Env): Promise<void> {
+async function parseAndStore(data: string, env: Env): Promise<void> {
 
 	const parser = new XMLParser();
 	const jObj = parser.parse(data);
