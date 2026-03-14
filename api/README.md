@@ -17,15 +17,18 @@ API implemention, using Cloudflare worker
 
 If you have not already done so `npm install wrangler --save-dev`
 
-`cp wrangler.toml.sample wrangler.toml`
+`cp wrangler.jsonc.sample wrangler.jsonc`
 
-Setup Id from cron wrangler `../cron/wrangler.toml`
+Setup Id from cron wrangler `../cron/wrangler.jsonc`
 
-```toml
-[[kv_namespaces]]
-binding = "KV_CURRENCIES_RATES"
-id = "xxxx"
-#preview_id = "yyy"
+```jsonc
+"kv_namespaces": [
+		{
+			"binding": "KV_CURRENCIES_RATES",
+			"id": "",
+			"preview_id": "",
+		},
+	],
 ```
 
 `npm install`
@@ -57,7 +60,7 @@ curl -s "${URL}/rate/?from=usd&to=chf&amount=100" | jq
 
 ### Using newman
 
-#### Test locally 
+#### Test locally
 * Run local `newman run version\ 0.2.x.postman_collection.json -e CF-WRANGLER-DEV -e CF-WRANGLER-DEV.postman_environment.json`
 
 ## License

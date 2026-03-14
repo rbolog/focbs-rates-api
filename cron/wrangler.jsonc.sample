@@ -1,0 +1,34 @@
+{
+	"name": "focbs-rates-cron",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-03-14",
+
+	// Cron Triggers
+	// Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
+	// Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
+	"triggers": {
+		"crons": ["15 12 * * *", "0 2-6 * * *"],
+	},
+
+	"env": {
+		"dev": {
+			"triggers": {
+				"crons": ["* * * * *"],
+			},
+		},
+	},
+
+	"vars": {
+		"RATES_REQUEST_URL": "https://www.backend-rates.bazg.admin.ch/api/xmldaily?locale=en",
+		"DISABLE_HASH": false,
+		"KEY_PREFIX": "KEY_C_",
+	},
+
+	"kv_namespaces": [
+		{
+			"binding": "KV_CURRENCIES_RATES",
+			"id": "",
+			// "preview_id": ""
+		},
+	],
+}

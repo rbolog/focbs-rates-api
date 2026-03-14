@@ -54,14 +54,17 @@ Notes:
 
 ## General information
 
-The **wrangler.toml** configuration file is not included; you need to create one for each project. **wrangler.toml.sample** can be used as the base for each project. 
+The **wrangler.jsonc** configuration file is not included; you need to create one for each project. **wrangler.jsonc.sample** can be used as the base for each project. 
 The KV base is shared, so you need the same **id** in both **wrangler.toml** configuration files.
 
-```toml
-[[kv_namespaces]]
-binding = "KV_CURRENCIES_RATES"
-id = ""
-#preview_id = ""
+```jsonc
+"kv_namespaces": [
+		{
+			"binding": "KV_CURRENCIES_RATES",
+			"id": "",
+			"preview_id": "",
+		},
+	],
 ```
 
 ### Minimum tools

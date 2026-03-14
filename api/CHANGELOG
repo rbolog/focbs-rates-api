@@ -3,3 +3,5 @@
 0.2.3 eslint and remove dead code align
 
 0.2.4 update fast-xml-parser due to CVE-2026-26278
+
+0.3.0 Refactor and improve for llm function calling

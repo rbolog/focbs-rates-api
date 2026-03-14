@@ -1,264 +1,446 @@
 openapi: '3.1.0'
 info:
-  version: '0.2.2'
-  title: focbs-rates-api
-  summary: Demonstration of the use of Cloudflare by the VD i-LAB incubation project.
-  description: Swiss Federal Office of Customs and Border Security FOCBS Publish daily, exchange rates as XML/PDF file. We use this source to provide API access to the (only) current exchange rates.
+  title: FOCBS Currency Rates API
+  version: '0.3.0'
+  summary: Daily exchange rates from the Swiss Federal Office for Customs and Border Security (FOCBS/BAZG).
+  description: >
+    REST API providing daily exchange rates published by the Swiss Federal Office
+    for Customs and Border Security (FOCBS / BAZG). All rates are relative to CHF
+    (Swiss Franc). Data is sourced from the official BAZG XML feed and served via
+    Cloudflare Workers with edge caching.
+
+    Key constraints:
+    - All rates are CHF-based. Currency pair conversions require at least one side to be CHF.
+    - Currency codes follow ISO 4217 (3 uppercase letters). The API accepts case-insensitive input.
+    - The `from` parameter defaults to CHF when omitted in pair rate conversions.
+    - Rates are updated daily by the FOCBS. The `validity_date` field indicates when the current rate expires.
   license:
     name: BSD-3-Clause
     url: https://spdx.org/licenses/BSD-3-Clause.html
   termsOfService: https://www.rates.bazg.admin.ch/home
   contact:
-    name: Github
+    name: GitHub Repository
     url: https://github.com/rbolog/focbs-rates-api
 
 servers:
   - url: https://ratesapi.ilab-dgnsi-vd.ch
-    description: Demonstration server. Please note that this server is only accessible from Switzerland.
-  - url: http://localhost:8787
-    description: Default url using Cloudflare dev. tools wrangler  
+    description: Production server (restricted to Switzerland).
+
+security: []
 
 paths:
   /all:
     get:
-      description: Return an array of all currencies
-      operationId: getAll
+      operationId: getAllCurrencyRates
+      summary: Get all available currency rates
+      description: >
+        Returns the complete list of currency exchange rates relative to CHF, as
+        published daily by the FOCBS. The response is an array of CurrencyRate
+        objects covering all supported currencies. Cached for 1 hour via
+        Cache-Control and ETag headers.
       responses:
         '200':
-          description: All currencies
+          description: Successful response containing all currency rates.
+          headers:
+            ETag:
+              description: Hash of the current dataset for cache validation.
+              schema:
+                type: string
+            Cache-Control:
+              description: 'Caching directive: public, immutable, s-maxage=3600.'
+              schema:
+                type: string
           content:
             text/json:
               schema:
-                $ref: '#/components/schemas/Currencies'
-        403:
-          description: Forbidden. Could be blocked by cloudflare security features
+                type: array
+                items:
+                  $ref: '#/components/schemas/CurrencyRate'
+        '400':
+          description: Bad request (malformed URL or query string).
+          content:
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. May be blocked by Cloudflare security features.
           content:
             text/html:
               schema:
-                  type: string
-        '400':
-          description: Bad request error
+                type: string
+        '500':
+          description: Incomplete data retrieval from the key-value store.
           content:
             text/json:
               schema:
-                  $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error'
+
   /currency/{code}:
     get:
-      description: Return a currency for a code. Like EUR, USD, ...
-      operationId: getCurrency
+      operationId: getCurrencyRate
+      summary: Get the exchange rate for a specific currency
+      description: >
+        Returns the exchange rate details for a single currency identified by its
+        ISO 4217 code. The rate is relative to CHF. The response includes
+        Last-Modified and Cache-Control headers, with s-maxage computed from the
+        rate validity date.
+      parameters:
+        - $ref: '#/components/parameters/CurrencyCodePath'
       responses:
         '200':
-          description: Currency data if exist.
+          description: Successful response with the requested currency rate.
+          headers:
+            Last-Modified:
+              description: Date when the rate was last published by the FOCBS.
+              schema:
+                type: string
+                format: date-time
+            Cache-Control:
+              description: >
+                Dynamic caching directive based on rate validity
+                (public, immutable, s-maxage=<seconds_until_expiry>).
+              schema:
+                type: string
           content:
             text/json:
               schema:
-                $ref: '#/components/schemas/Currency'
-        403:
-          description: Forbidden. Could be blocked by cloudflare security features
+                $ref: '#/components/schemas/CurrencyRate'
+        '400':
+          description: Invalid currency code format (must be exactly 3 letters).
+          content:
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. May be blocked by Cloudflare security features.
           content:
             text/html:
               schema:
-                  type: string
-        '400':
-          description: Bad request error
+                type: string
+        '404':
+          description: The specified currency code was not found in the dataset.
           content:
             text/json:
               schema:
-                  $ref: '#/components/schemas/Error'
-    parameters:
-    - name: code
-      description: Currency code
-      in: path
-      required: true
-      schema:
-          $ref: '#/components/schemas/Code'
-          example: EUR
+                $ref: '#/components/schemas/Error'
+
   /currency/exist/{code}:
     get:
-      description: Test if currency exists for a code. Like EUR, USD, ...
-      operationId: isCurrencyExist
+      operationId: checkCurrencyExists
+      summary: Check whether a currency code exists in the dataset
+      description: >
+        Returns a boolean flag indicating whether the given ISO 4217 currency code
+        is available in the FOCBS dataset. Useful for validating a currency code
+        before attempting a conversion.
+      parameters:
+        - $ref: '#/components/parameters/CurrencyCodePath'
       responses:
         '200':
-          description: Currency data if exist.
+          description: Existence check result.
           content:
             text/json:
               schema:
-                $ref: '#/components/schemas/Exist'
-        403:
-          description: Forbidden. Could be blocked by cloudflare security features
+                $ref: '#/components/schemas/CurrencyExistence'
+        '400':
+          description: Invalid currency code format (must be exactly 3 letters).
+          content:
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. May be blocked by Cloudflare security features.
           content:
             text/html:
               schema:
-                  type: string
-        '400':
-          description: Bad request error
-          content:
-            text/json:
-              schema:
-                  $ref: '#/components/schemas/Error'
-    parameters:
-    - name: code
-      description: Currency code
-      in: path
-      required: true
-      schema:
-          $ref: '#/components/schemas/Code'
-          example: CLP
+                type: string
+
   /rate:
     get:
-      description: Return a rate for a pair of currencies.
-      operationId: getRate
+      operationId: convertCurrencyPair
+      summary: Convert an amount between two currencies
+      description: >
+        Converts a monetary amount from one currency to another using the current
+        FOCBS daily rates. At least one side of the pair MUST be CHF. If the
+        "from" parameter is omitted, it defaults to CHF.
+
+        Examples:
+        - CHF to EUR: /rate/?to=eur&amount=100
+        - USD to CHF: /rate/?from=usd&to=chf&amount=250
+        - CHF to USD: /rate/?from=chf&to=usd&amount=50.75
+      parameters:
+        - name: from
+          in: query
+          required: false
+          description: >
+            Source currency as an ISO 4217 three-letter code. Case-insensitive.
+            Defaults to CHF when omitted.
+          schema:
+            type: string
+            pattern: '^[A-Za-z]{3}$'
+            default: CHF
+            examples:
+              - CHF
+              - USD
+              - EUR
+        - name: to
+          in: query
+          required: true
+          description: >
+            Target currency as an ISO 4217 three-letter code. Case-insensitive.
+            At least one of "from" or "to" must be CHF.
+          schema:
+            type: string
+            pattern: '^[A-Za-z]{3}$'
+            examples:
+              - EUR
+              - USD
+              - GBP
+        - name: amount
+          in: query
+          required: true
+          description: >
+            The monetary amount to convert. Must be a valid positive number.
+          schema:
+            type: number
+            format: double
+            examples:
+              - 100.50
+              - 250
+              - 1
       responses:
         '200':
-          description: Result of convert.
+          description: Successful currency conversion result.
           content:
             text/json:
               schema:
                 $ref: '#/components/schemas/PairRate'
-        403:
-          description: Forbidden. Could be blocked by cloudflare security features
-          content:
-            text/html:
-              schema:
-                  type: string
         '400':
-          description: Bad request error
+          description: >
+            Invalid parameters. Possible causes: amount is not a number,
+            invalid currency code format, or the currency pair does not
+            include CHF on at least one side.
           content:
             text/json:
               schema:
-                  $ref: '#/components/schemas/Error'
-        
-    parameters:
-    - name: from
-      description: Source currency code. default is CHF
-      in: query
-      required: false
-      schema:
-          $ref: '#/components/schemas/Code'
-          exemple: CHF
-    - name: to
-      description: Target currency code
-      in: query
-      required: true
-      schema:
-          $ref: '#/components/schemas/Code'
-          example: EUR
-    - name: amount
-      description: Amount to convert
-      in: query
-      required: true
-      schema:
-        type: number
-        example: 253.50
-
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. May be blocked by Cloudflare security features.
+          content:
+            text/html:
+              schema:
+                type: string
 
 components:
+  parameters:
+    CurrencyCodePath:
+      name: code
+      in: path
+      required: true
+      description: >
+        ISO 4217 three-letter currency code (case-insensitive, e.g. eur, USD, Gbp).
+      schema:
+        $ref: '#/components/schemas/CurrencyCode'
+
   schemas:
-    Currencies:
-        description: All currencies
-        type: array
-        items:
-            $ref: '#/components/schemas/Currency'
-    Currency:
-        description: currency rate informations.
-        type: object
-        properties:
-            i18n:
-            type: array
-            items:
-                type: object
-                properties:
-                    code:
-                        type: string
-                        pattern: ^[a-z]{2}$
-                    text:
-                        type: string
-            amount:
-                type: integer
-            code:
-                $ref: '#/components/schemas/Code'
-            rate:
-                type: number
-            rate_date:
-                $ref: '#/components/schemas/DateTimeISO'
-            validity_date:
-                $ref: '#/components/schemas/DateTimeISO'
-        required:
-            - i18n
-            - amount
-            - code
-            - rate
-            - rate_date
-            - validity_date
+    CurrencyCode:
+      description: An ISO 4217 three-letter currency code (e.g. CHF, EUR, USD).
+      type: string
+      pattern: '^[A-Z]{3}$'
+      examples:
+        - EUR
+        - USD
+        - GBP
+        - JPY
+        - CLP
+
+    FormattedAmount:
+      description: 'A monetary amount formatted as a string with 2 decimal places (e.g. "100.50").'
+      type: string
+      pattern: "^\\d+\\.\\d{2}$"
+      examples:
+        - '100.50'
+        - '0.93'
+        - '25300.00'
+
+    DateTimeISO:
+      description: Date and time in ISO 8601 format with timezone offset.
+      type: string
+      format: date-time
+      pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+      examples:
+        - '2025-01-15T12:00:00.000+01:00'
+
+    CurrencyI18n:
+      description: Localized name of a currency in a specific language.
+      type: object
+      required:
+        - code
+        - text
+      properties:
+        code:
+          type: string
+          description: 'ISO 639-1 two-letter language code (e.g. de, fr, it, en).'
+          pattern: '^[a-z]{2}$'
+          examples:
+            - fr
+            - de
+            - it
+            - en
+        text:
+          type: string
+          description: Currency name in the given language.
+          examples:
+            - Euro
+            - Dollar américain
+            - Japanischer Yen
+
+    CurrencyRate:
+      description: >
+        Exchange rate for a single currency relative to CHF, as published by
+        the FOCBS. The effective rate in CHF is calculated as: amount * rate.
+        For example, if code=EUR, amount=1, rate=0.93, then 1 EUR = 0.93 CHF.
+        Some currencies use amount=100 (e.g. 100 JPY = rate CHF).
+      type: object
+      required:
+        - i18n
+        - rate
+        - amount
+        - code
+        - rate_date
+        - validity_date
+      properties:
+        i18n:
+          type: array
+          description: Localized currency names in multiple languages (de, fr, it, en).
+          items:
+            $ref: '#/components/schemas/CurrencyI18n'
+        rate:
+          type: number
+          format: double
+          description: Exchange rate value relative to CHF.
+          examples:
+            - 0.9345
+            - 1.0752
+        amount:
+          type: number
+          format: double
+          description: >
+            Unit amount the rate applies to. Usually 1, but some currencies
+            quote per 100 units (e.g. JPY).
+          examples:
+            - 1
+            - 100
+        code:
+          $ref: '#/components/schemas/CurrencyCode'
+        rate_date:
+          $ref: '#/components/schemas/DateTimeISO'
+        validity_date:
+          allOf:
+            - $ref: '#/components/schemas/DateTimeISO'
+            - description: Date and time until which this rate is considered valid.
+
     PairRate:
-        description: Pair rate result
-        type: object
-        properties:
-            from:
-                $ref: '#/components/schemas/Rate'
-            to:
-                $ref: '#/components/schemas/Rate'
-            validity:
-                type: object
-                properties:
-                    request_date:
-                        $ref: '#/components/schemas/DateTimeISO'
-                    validity_date:
-                        $ref: '#/components/schemas/DateTimeISO'
-            rate:
-                type: array
-                minItems: 2
-                maxItems: 2
-                items:
-                    - number
-                    - number
-        required:
-            - from
-            - to
-            - validity
-            - rate
-    Rate:
-        description: rate use by PairRates
-        type: object
-        properties:
-            currency:
-                $ref: '#/components/schemas/Code'
-            amount:
-                $ref: '#/components/schemas/Amount'
-        required:
+      description: Result of a currency pair conversion between two currencies.
+      type: object
+      required:
+        - from
+        - to
+        - validity
+        - rate
+      properties:
+        from:
+          type: object
+          description: Source currency and the original amount before conversion.
+          required:
             - currency
             - amount
-    DateTimeISO:
-        description: Date and time as ISO format
-        type: string
-        pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|\\+|\\-)\\d{2}:\\d{2}$"
-    Code:
-        description: A currency code. CHF,EUR,USD,...
-        type: string
-        pattern: ^[A-Z]{3}$
-    Amount:
-        description: Result amount formated like ###.##
-        type: string
-        pattern: ^\\d*\\.\\d{2}
-    CurrencyExist:
-      description: result of request currenvy/exist/{code}
+          properties:
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+            amount:
+              $ref: '#/components/schemas/FormattedAmount'
+        to:
+          type: object
+          description: Target currency and the converted amount.
+          required:
+            - currency
+            - amount
+          properties:
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
+            amount:
+              $ref: '#/components/schemas/FormattedAmount'
+        validity:
+          type: object
+          description: Timestamps associated with the conversion.
+          required:
+            - request_date
+            - validity_date
+          properties:
+            request_date:
+              allOf:
+                - $ref: '#/components/schemas/DateTimeISO'
+                - description: Timestamp when the conversion was requested (Europe/Zurich timezone).
+            validity_date:
+              type: string
+              description: >
+                Date until which the used rate is valid. Set to "Not determined"
+                when converting between the same currency.
+              examples:
+                - '2025-01-16T12:00:00.000+01:00'
+                - 'Not determined'
+        rate:
+          type: array
+          description: >
+            Tuple of [rate, rateAmount] used for the conversion calculation.
+            Both values are 1.0 when converting between the same currency (no-op).
+          prefixItems:
+            - type: number
+              format: double
+              description: The exchange rate applied.
+            - type: number
+              format: double
+              description: The rate amount (unit multiplier).
+          minItems: 2
+          maxItems: 2
+          examples:
+            - [0.9345, 1.0]
+            - [1.0, 1.0]
+
+    CurrencyExistence:
+      description: Result of a currency existence check in the FOCBS dataset.
       type: object
-      properties:
-          currency_code:
-              $ref: '#/components/schemas/Code'
-          is_exist:
-              type: boolean
       required:
-          - currency
-          - amount
+        - currency_code
+        - is_exist
+      properties:
+        currency_code:
+          $ref: '#/components/schemas/CurrencyCode'
+        is_exist:
+          type: boolean
+          description: Whether this currency code exists in the FOCBS dataset.
+          examples:
+            - true
+            - false
+
     Error:
-      description: aa
+      description: >
+        Standard error response returned by the API for all error conditions.
       type: object
+      required:
+        - error_date
+        - error_msg
       properties:
         error_date:
-            $ref: '#/components/schemas/DateTimeISO'
+          allOf:
+            - $ref: '#/components/schemas/DateTimeISO'
+            - description: Timestamp when the error occurred (Europe/Zurich timezone).
         error_msg:
-            type: string
-      required:
-          - error_date
-          - error_msg
+          type: string
+          description: Human-readable error message describing the problem.
+          examples:
+            - 'Bad request. amount is not a number'
+            - 'Bad request. Invalid from'
+            - 'EUR not found'
+            - 'Currencies pair are invalid. From = USD To = EUR.'
+            - 'Incomplete list.'

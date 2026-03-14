@@ -6,4 +6,6 @@
 
 0.2.3 eslint and remove dead code align with api version
 
-0.2.4 update fast-xml-parser due to CVE-2026-26278
+0.2.4 upgrade to new version of cloudflare and change wrangler.toml en wrangler.jsonc
+
+0.3.0 Improve code

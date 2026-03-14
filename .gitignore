@@ -12,7 +12,7 @@
 canister_ids.json
 src/declarations/
 
-# Rust 
+# Rust
 /target
 Cargo.lock
 
@@ -23,6 +23,7 @@ dist/
 .env.production
 .wrangler
 wrangler.toml
+wrangler.jsonc
 package-lock.json
 
 # Others
